@@ -1,11 +1,13 @@
 import styled from "styled-components";
+import banner from "../../assets/banner.jpg"
 
 export const Container = styled.div`
-  height: 100vh;
-  padding: 20px;
+  height: 90vh;
   display: flex;
   flex-direction: row;
+  padding: 30px;
   justify-content: center;
+  gap: 50px;
 
   sub {
     span {
@@ -25,12 +27,26 @@ export const Container = styled.div`
   }
 `;
 
+export const SideBanner = styled.div`
+  width: 50%;
+  height: 100%;
+  background-image: url(${banner});
+  background-size: cover;
+  border-radius: 30px;
+  max-width: 800px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+`;
+
 export const LoginWrapper = styled.div`
-  display: flex;
+ display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 50%;
+  background-color: #fff;
+  max-width: 600px;
+  border-radius: 30px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
   .logo {
     width: 60px;

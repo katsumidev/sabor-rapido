@@ -1,8 +1,11 @@
 import React from "react";
 import { Container, Info, LogIn } from "./styles";
-import plate2 from "../../../assets/plate2.png";
+import plate2 from "../../../assets/aboutus_plate.png";
+import { useNavigate } from "react-router";
 
 function AboutUs() {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <img src={plate2} />
@@ -21,7 +24,7 @@ function AboutUs() {
           descubra o caminho mais rápido para o prazer gastronômico.
         </p>
 
-        <LogIn>Cadastre-se!</LogIn>
+        <LogIn onClick={() => navigate("/register")}>Cadastre-se!</LogIn>
       </Info>
     </Container>
   );

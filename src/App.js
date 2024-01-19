@@ -7,41 +7,32 @@ import Footer from "./components/Footer";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Hub from "./pages/Hub";
+import { consultAuth } from "./services/api";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const checkIfUserIsLogged = async () => {
+    const checkAuthentication = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/consult`, {
-          method: "get",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        });
+        const response = await consultAuth();
 
-        if (response.status === 200) {
+        if (response) {
           setIsAuthenticated(true);
         }
-      } catch (error) {
-        console.error("Error checking authentication:", error);
+      } catch (err) {
+        console.log(err);
       }
     };
 
-    checkIfUserIsLogged();
-  }, []); 
+    checkAuthentication();
+  }, []);
 
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route
-          path="/"
-          element={isAuthenticated ? <Hub /> : <Main />}
-        />
+        <Route path="/" element={isAuthenticated ? <Hub /> : <Main />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Routes>

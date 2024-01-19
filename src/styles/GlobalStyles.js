@@ -23,12 +23,14 @@ export default createGlobalStyle`
     }
 
     :root {
-        --main-background: #FEFCFB;
+        --main-background: #F6F6F8;
         --main-text: #000000;
-        --secundary-background: #EEEEEE;
+        --secundary-background: #EBEAED;
         --tertiary-background: #E8E5E9;
+        --hub-background: #F7F6F9;
         --accent-color:  #ED3C20;
         --accent-color-hover:  #353535;
+        --semi-dark: #6b6b6b;
     }
 
     @font-face {

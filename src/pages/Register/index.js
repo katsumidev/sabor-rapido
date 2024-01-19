@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   RegisterWrapper,
@@ -11,64 +11,84 @@ import {
   ImageContainer,
   Preview,
   UploadMessage,
+  ImageInfo,
+  DoubleInput,
 } from "./styles";
 import Dropzone from "react-dropzone";
 import { AiFillCamera } from "../../styles/Icons";
 import simple_logo from "../../assets/simple_logo.png";
+import axios from "axios";
+import { consultCEP } from "../../services/api";
 
 function UploadedImage(props) {
   return (
     <ImageContainer>
       <Preview src={props.preview} />
-      <p>{props.name}</p>
+      <ImageInfo>
+        <p>{props.name}</p>
+        <sub>{`${props.type} - ${(props.size / (1024 * 1024)).toFixed(2)} mb`}</sub>
+      </ImageInfo>
     </ImageContainer>
   );
 }
 
 function Register() {
-  const [name, setName] = useState("");
+  const [registerData, setRegisterData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cep: 0,
+    street: "",
+    neighborhood: "",
+    complement: "",
+    uf: "",
+  });
   const [pictureInfo, setPictureInfo] = useState({});
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [cep, setCEP] = useState(0);
 
-  function createUserAccount() {
-    const data = new FormData();
+  async function createUserAccount() {
+    try {
+      if (
+        !registerData.name ||
+        !registerData.email ||
+        !pictureInfo.file ||
+        !registerData.password ||
+        !registerData.street ||
+        !registerData.neighborhood ||
+        !registerData.number
+      ) {
+        throw new Error("Há um campo faltando");
+      }
 
-    data.append("file", pictureInfo.file);
-    data.append("name", name);
-    data.append("email", email);
-    data.append("password", password);
-    data.append("cep", cep);
+      const formData = new FormData();
+      formData.append("file", pictureInfo.file);
+      formData.append("name", registerData.name);
+      formData.append("email", registerData.email);
+      formData.append("password", registerData.password);
+      formData.append("cep", registerData.cep);
+      formData.append("street", registerData.street);
+      formData.append("neighborhood", registerData.neighborhood);
+      formData.append("complement", registerData.complement);
+      formData.append("uf", registerData.uf);
+      formData.append("number", registerData.number);
 
-    if (
-      cep != null &&
-      name != null &&
-      email != null &&
-      pictureInfo.file != null &&
-      password != null
-    ) {
-      fetch(`${process.env.REACT_APP_SERVER_URL}/auth/register`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-        },
-        body: data,
-      }).then(async (res) => {
-        let data = await res.json();
-
-        switch (res.status) {
-          case 200:
-            if (data.token) {
-              alert("conta criada com sucesso!");
-              localStorage.setItem("access_token", data.token);
-              window.location.href = "/";
-            }
-            break;
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/auth/register`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
+          },
         }
-      });
-    } else {
-      alert("Há um campo faltando");
+      );
+
+      if (response.status === 200 && response.data.token) {
+        alert("Conta criada com sucesso!");
+        localStorage.setItem("access_token", response.data.token);
+        window.location.href = "/";
+      }
+    } catch (error) {
+      alert(error.message);
     }
   }
 
@@ -88,11 +108,34 @@ function Register() {
     return <UploadMessage type="success">Solte-o!!</UploadMessage>;
   }
 
+  useEffect(() => {
+    if ((registerData.cep || []).length >= 8) {
+      try {
+        const getCepInfo = async () => {
+          const response = await consultCEP(registerData.cep);
+
+          setRegisterData((prevState) => ({
+            ...prevState,
+            street: response.logradouro,
+            neighborhood: response.bairro,
+            uf: response.uf,
+          }));
+        };
+
+        getCepInfo();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [registerData.cep]);
+
   function handleUpload(file) {
     file.map((item) => {
       setPictureInfo({
         file: item,
         name: item.name,
+        type: item.type,
+        size: item.size,
         preview: URL.createObjectURL(item),
       });
     });
@@ -110,7 +153,12 @@ function Register() {
           <Input>
             <FormInput
               placeholder="Nome"
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) =>
+                setRegisterData((prevState) => ({
+                  ...prevState,
+                  name: e.target.value,
+                }))
+              }
             />
             <label className="form-label">Nome</label>
           </Input>
@@ -118,7 +166,12 @@ function Register() {
           <Input>
             <FormInput
               placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) =>
+                setRegisterData((prevState) => ({
+                  ...prevState,
+                  email: e.target.value,
+                }))
+              }
             />
             <label className="form-label">Email</label>
           </Input>
@@ -127,7 +180,12 @@ function Register() {
             <FormInput
               placeholder="Senha"
               type="password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) =>
+                setRegisterData((prevState) => ({
+                  ...prevState,
+                  password: e.target.value,
+                }))
+              }
             />
             <label className="form-label">Senha</label>
           </Input>
@@ -137,14 +195,85 @@ function Register() {
             <label className="form-label">Senha Novamente</label>
           </Input>
 
+          <b>Informações de Entrega</b>
           <Input>
             <FormInput
               placeholder="Seu CEP"
+              onChange={(e) =>
+                setRegisterData((prevState) => ({
+                  ...prevState,
+                  cep: e.target.value,
+                }))
+              }
               type="text"
-              onChange={(e) => setCEP(e.target.value)}
             />
             <label className="form-label">Seu CEP</label>
           </Input>
+
+          <DoubleInput>
+            <Input>
+              <FormInput
+                placeholder="Rua"
+                type="text"
+                disabled={registerData.cep ? true : false}
+                value={registerData.street}
+                onChange={(e) =>
+                  setRegisterData((prevState) => ({
+                    ...prevState,
+                    street: e.target.value,
+                  }))
+                }
+              />
+              <label className="form-label">Rua</label>
+            </Input>
+            <Input>
+              <FormInput
+                placeholder="Seu Bairro"
+                type="text"
+                value={registerData.neighborhood}
+                disabled={registerData.cep ? true : false}
+                onChange={(e) =>
+                  setRegisterData((prevState) => ({
+                    ...prevState,
+                    neighborhood: e.target.value,
+                  }))
+                }
+              />
+              <label className="form-label">Seu Bairro</label>
+            </Input>
+          </DoubleInput>
+
+          <DoubleInput>
+            <Input>
+              <FormInput
+                placeholder="Número"
+                className="number"
+                type="text"
+                value={registerData.number}
+                onChange={(e) =>
+                  setRegisterData((prevState) => ({
+                    ...prevState,
+                    number: e.target.value,
+                  }))
+                }
+              />
+              <label className="form-label">Número</label>
+            </Input>
+            <Input>
+              <FormInput
+                placeholder="Complemento"
+                type="text"
+                value={registerData.complement}
+                onChange={(e) =>
+                  setRegisterData((prevState) => ({
+                    ...prevState,
+                    complement: e.target.value,
+                  }))
+                }
+              />
+              <label className="form-label">Complemento</label>
+            </Input>
+          </DoubleInput>
 
           <p>Sua foto de perfil</p>
           <Dropzone accept="image/*" onDropAccepted={handleUpload}>
@@ -164,10 +293,14 @@ function Register() {
             <UploadedImage
               preview={pictureInfo.preview}
               name={pictureInfo.name}
+              type={pictureInfo.type}
+              size={pictureInfo.size}
             ></UploadedImage>
           )}
 
-          <RegisterBtn onClick={() => createUserAccount()}>Criar Conta</RegisterBtn>
+          <RegisterBtn onClick={() => createUserAccount()}>
+            Criar Conta
+          </RegisterBtn>
           <sub>
             Já tem uma conta? <span>Entre</span>
           </sub>

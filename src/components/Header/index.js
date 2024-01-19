@@ -1,47 +1,94 @@
-import React, { useState, useEffect } from "react";
-import { Container, HeaderMenu, ProfilePicture } from "./styles";
+import React, { useState, useRef, useEffect } from "react";
+import { Container, DeliveryRow, HeaderMenu, ProfilePicture } from "./styles";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router";
+import { consultAuth, consultCEP } from "../../services/api";
+import Dropdown from "../Dropdown";
+import {
+  FaShoppingBag,
+  FaUser,
+  FaSignOutAlt,
+  MdLocationOn,
+} from "../../styles/Icons";
 
 function Header() {
   const navigate = useNavigate();
   const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState({});
+  const dropdownRef = useRef(null);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const options = [
+    { name: "Ver Conta", icon: <FaUser />, action: "redirect", url: "account" },
+    {
+      name: "Meu Carrinho",
+      icon: <FaShoppingBag />,
+      action: "redirect",
+      url: "cart",
+    },
+    { name: "Sair", icon: <FaSignOutAlt />, action: "logout" },
+  ];
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/auth/consult`, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    }).then(async (res) => {
-      let data = await res.json();
-
-      switch (res.status) {
-        case 200:
-          setLogged(!logged);
-          setUserData(data);
-          break;
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
       }
-    });
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [dropdownRef]);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const response = await consultAuth();
+
+        setLogged(!logged);
+        setUserData(response);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    checkAuthentication();
   }, []);
 
   return (
     <Container>
       <img src={logo} onClick={() => navigate("/")} />
       <HeaderMenu>
-        <li>Sobre Nós</li>
-        <li>Fale Conosco</li>
         {logged ? (
           <>
+            <DeliveryRow>
+              <sub>Entregar para</sub>
+              <span>
+                <MdLocationOn size={15} />
+              </span>{" "}
+              {`${userData.street || "Inclua um endereço à sua conta"} ${
+                userData.number || ""
+              }`}
+            </DeliveryRow>
+            <li className="cart-btn">
+              <FaShoppingBag size={15} />
+            </li>
+
             <ProfilePicture
+              ref={dropdownRef}
+              onClick={() => setDropdownOpen(!isDropdownOpen)}
               picture={`${process.env.REACT_APP_SERVER_URL}/files/${userData.picture}`}
-            />
+            >
+              <Dropdown show={isDropdownOpen} items={options} />
+            </ProfilePicture>
           </>
         ) : (
           <>
+            <li>Sobre Nós</li>
+            <li>Fale Conosco</li>
             <li className="register-btn" onClick={() => navigate("/register")}>
               Criar Conta
             </li>

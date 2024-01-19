@@ -1,11 +1,13 @@
 import styled, { css } from "styled-components";
+import banner from "../../assets/banner.jpg";
 
 export const Container = styled.div`
-  height: 100vh;
-  padding: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding: 30px;
+  margin-bottom: 50px;
+  gap: 50px;
 
   sub {
     span {
@@ -18,10 +20,13 @@ export const Container = styled.div`
 `;
 
 export const SideBanner = styled.div`
-  width: 60%;
-  height: 100%;
+  width: 50%;
+  min-height: 100%;
+  background-image: url(${banner});
+  background-size: cover;
   border-radius: 30px;
-  background-image: url("https://e0.pxfuel.com/wallpapers/52/830/desktop-wallpaper-food-background-food-food-recipes-food-menu-greek-food.jpg");
+  max-width: 800px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
 
 export const RegisterWrapper = styled.div`
@@ -29,7 +34,12 @@ export const RegisterWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 50%;
+  padding: 30px 0;
+  background-color: #fff;
+  max-width: 600px;
+  border-radius: 30px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
   .logo {
     width: 60px;
@@ -45,10 +55,19 @@ export const RegisterBtn = styled.div`
   text-align: center;
   font-weight: 900;
   cursor: pointer;
+  margin-top: 40px;
+`;
+
+export const DoubleInput = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
 `;
 
 export const Form = styled.div`
-  width: 50%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -105,6 +124,10 @@ export const ImageContainer = styled.div`
   width: 100%;
   margin: 10px;
   align-items: center;
+  background-color: var(--secundary-background);
+  padding: 10px 20px;
+  border-radius: 30px;
+  gap: 20px;
 
   p {
     white-space: nowrap;
@@ -113,10 +136,20 @@ export const ImageContainer = styled.div`
   }
 `;
 
+export const ImageInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    margin: 0px;
+  }
+`;
+
 export const Preview = styled.img`
-  width: 120px;
-  height: 120px;
-  border-radius: 100%;
+  width: 70px;
+  height: 70px;
+  border-radius: 30px;
 `;
 
 export const Input = styled.div`

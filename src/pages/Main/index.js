@@ -1,12 +1,15 @@
 import React from "react";
 import wave from "../../assets/wave.png";
-import plate1 from "../../assets/plate.jpg";
+import plate1 from "../../assets/hero_banner.png";
 import { TbTruckDelivery } from "../../styles/Icons";
 import { Container, LeftSide, OrderNowBtn, RightSide } from "./styles";
 import AboutUs from "../../components/HeroComponents/AboutUs";
 import BestRestaurants from "../../components/HeroComponents/BestRestaurants";
+import { useNavigate } from "react-router";
 
 function Main() {
+  const navigate = useNavigate()
+
   return (
     <>
       <Container>
@@ -18,7 +21,7 @@ function Main() {
             <h1 className="accent">Refeição Favorita</h1>
             <h1>na Palma da Sua Mão!</h1>
             <h4>A qualquer hora, a qualquer momento.</h4>
-            <OrderNowBtn>
+            <OrderNowBtn onClick={() => navigate("/register")}>
               <TbTruckDelivery size={23} /> Peça Agora
             </OrderNowBtn>
           </div>

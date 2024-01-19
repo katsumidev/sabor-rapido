@@ -21,7 +21,7 @@ router.post(
   "/register",
   multer(multerConfig).single("file"),
   async (req, res) => {
-    const { email, name, cep, password } = req.body;
+    const { email, name, cep, password, street, neighborhood, number, complement, uf } = req.body;
     const { filename: key } = req.file;
 
     try {
@@ -36,6 +36,11 @@ router.post(
         email,
         password: hashedPassword,
         cep,
+        street,
+        neighborhood,
+        number,
+        complement,
+        uf,
         picture: key,
       });
 
@@ -61,14 +66,14 @@ router.post("/authenticate", async (req, res) => {
     if (!check_user) {
       return res
         .status(404)
-        .send({ error: `The email "${email}" was not found in our system.` });
+        .send({error: `The email "${email}" was not found in our system.`});
     }
 
     // utiliza a função compare do bcrypt para comparar a senha enviada com a armazenada no banco de dados, pois a senha no banco está criptografada em blowfish
     const passwordMatch = await bcrypt.compare(password, check_user.password);
 
     if (!passwordMatch) {
-      return res.status(403).send({ error: "Incorrect Password!!" });
+      return res.status(403).send({error: "Incorrect Password!!"});
     }
 
     check_user.password = undefined;
@@ -79,21 +84,24 @@ router.post("/authenticate", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 router.use(authMiddleware);
 
-router.get("/consult", async (req, res) => {
+router.get('/consult', async (req, res) => {
   try {
     const user = await User.findById(req.userId);
 
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).send('User not found');
     }
 
     res.json(user);
   } catch (error) {
     console.error(error); // Log do erro para depuração
-    res.status(500).send("Internal Server Error");
+    res.status(500).send('Internal Server Error');
   }
 });
+
+
 
 module.exports = (app) => app.use("/auth", router);

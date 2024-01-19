@@ -1,5 +1,4 @@
 const mongoose = require("../../database");
-const bcrypt = require("bcryptjs");
 
 const UsersSchema = new mongoose.Schema({
   name: {
@@ -22,6 +21,24 @@ const UsersSchema = new mongoose.Schema({
   },
   cep: {
     type: Number,
+  },
+  street: {
+    type: String,
+    required: true,
+  },
+  neighborhood: {
+    type: String,
+    required: true,
+  },
+  number: {
+    type: Number,
+    required: true,
+  },
+  uf: {
+    type: String, 
+  },
+  complement: {
+    type: String,
   },
   cart: {
     type: Array,

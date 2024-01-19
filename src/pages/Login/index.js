@@ -1,54 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Container, LoginWrapper } from "./styles";
+import { Container, LoginWrapper, SideBanner } from "./styles";
 import { MdOutlineError } from "../../styles/Icons";
 import {
   Form,
   FormInput,
   Input,
   RegisterBtn,
-  SideBanner,
 } from "../Register/styles";
 import simple_logo from "../../assets/simple_logo.png";
+import { authenticateUser } from "../../services/api";
+import { useNavigate } from "react-router";
 
 function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [message, setMessage] = useState({ text: "", type: "" });
+  const navigate = useNavigate()
 
-  const authenticateUser = () => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/auth/authenticate`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    }).then(async (res) => {
-      let data = await res.json();
+  const handleAuthentication = async () => {
+    const result = await authenticateUser(email, password);
 
-      switch (res.status) {
-        case 404:
-          setMessage({
-            text: "Senha Incorreta ou Usuário não Cadastrado.",
-            type: "error",
-          });
-          break;
-        case 403:
-          setMessage({
-            text: "Senha Incorreta ou Usuário não Cadastrado.",
-            type: "error",
-          });
-          break;
-        case 200:
-          if (data.token) {
-            userLogin(data.token);
-          }
-          break;
-      }
-    });
+    switch (result.error) {
+      case true:
+        setMessage({
+          text: result.message,
+          type: "error",
+        });
+        break;
+      case false:
+        userLogin(result.token);
+        break;
+      default:
+        console.error("Unexpected error in authentication result.");
+    }
   };
 
   function userLogin(token) {
@@ -62,8 +46,8 @@ function Login() {
       <SideBanner />
       <LoginWrapper>
         <img src={simple_logo} className="logo" />
-        <h1>Entre na sua conta</h1>
-        <p>E comece a pedir em mais de 50.000 restaurantes!</p>
+        <h1>Bem vindo de volta! 👋</h1>
+        <p>Entre agora para começar a pedir no nosso cardapio.</p>
 
         <Form>
           {message.text && (
@@ -90,7 +74,10 @@ function Login() {
             <label className="form-label">Sua Senha</label>
           </Input>
 
-          <RegisterBtn onClick={() => authenticateUser()}>Entrar</RegisterBtn>
+          <RegisterBtn onClick={() => handleAuthentication()}>
+            Entrar
+          </RegisterBtn>
+          <sub>Não tem uma conta ainda? <span onClick={() => navigate("/register")}>Crie uma agora!</span></sub>
         </Form>
       </LoginWrapper>
     </Container>
