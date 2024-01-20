@@ -45,17 +45,7 @@ function Register() {
   });
   const navigate = useNavigate();
 
-  const [registerData, setRegisterData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-    cep: 0,
-    street: "",
-    neighborhood: "",
-    complement: "",
-    uf: "",
-  });
+  const [registerData, setRegisterData] = useState({});
   const [pictureInfo, setPictureInfo] = useState({});
 
   async function createUserAccount() {
@@ -75,7 +65,7 @@ function Register() {
       formData.append("name", registerData.name);
       formData.append("email", registerData.email);
       formData.append("password", registerData.password);
-      formData.append("cep", registerData.cep);
+      formData.append("cep", registerData.cep.replace(/\D/g, ""));
       formData.append("street", registerData.street);
       formData.append("neighborhood", registerData.neighborhood);
       formData.append("complement", registerData.complement);
@@ -119,10 +109,12 @@ function Register() {
   }
 
   useEffect(() => {
-    if ((registerData.cep || []).length >= 8) {
+    const formattedCep = (registerData.cep || "").replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (formattedCep.length >= 8) {
       try {
         const getCepInfo = async () => {
-          const response = await consultCEP(registerData.cep);
+          const response = await consultCEP(formattedCep);
 
           setRegisterData((prevState) => ({
             ...prevState,
@@ -166,6 +158,26 @@ function Register() {
 
     return false; // Retorna false apenas se todos os campos estiverem preenchidos e pictureInfo.file não estiver vazio
   }
+
+  const formatCEP = (inputCEP) => {
+    const numericCEP = inputCEP.replace(/\D/g, "");
+    const formattedCEP = numericCEP.replace(/^(\d{5})(\d{3})$/, "$1-$2");
+
+    return formattedCEP;
+  };
+
+  const handleCEPChange = (e) => {
+    const inputCEP = e.target.value;
+
+    if (inputCEP.length <= 9) {
+      const formattedCEP = formatCEP(inputCEP);
+
+      setRegisterData((prevState) => ({
+        ...prevState,
+        cep: formattedCEP,
+      }));
+    }
+  };
 
   return (
     <Container>
@@ -256,12 +268,8 @@ function Register() {
           <Input>
             <FormInput
               placeholder="Seu CEP"
-              onChange={(e) =>
-                setRegisterData((prevState) => ({
-                  ...prevState,
-                  cep: e.target.value,
-                }))
-              }
+              onChange={handleCEPChange}
+              value={registerData.cep}
               type="text"
             />
             <label className="form-label">Seu CEP</label>
@@ -312,7 +320,7 @@ function Register() {
                 onChange={(e) =>
                   setRegisterData((prevState) => ({
                     ...prevState,
-                    number: e.target.value,
+                    number: parseInt(e.target.value, 10) || "",
                   }))
                 }
               />

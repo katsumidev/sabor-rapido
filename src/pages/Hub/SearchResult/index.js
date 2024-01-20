@@ -38,7 +38,7 @@ function SearchResult() {
 
   return (
     <Container>
-      <sub>Resultados da busca por: {term}</sub>
+      <sub className="search-result-title">Resultados da busca por: <span>{term}</span></sub>
       <Title>O que você procura?</Title>
       <CategoriesWrapper style={{ marginBottom: "50px", marginTop: "20px" }}>
         {(types || []).map((type, index) => (
@@ -63,8 +63,11 @@ function SearchResult() {
                 rating={restaurant.rating}
                 image={restaurant.banner}
               />
-            ) : selectedOne === "items" ? (
+            ) : selectedOne === "items" &&
+              restaurant.menu &&
+              restaurant.menu.length > 0 ? (
               <ItemWrapper>
+                {/* Renderizar informações do restaurante apenas se o menu não estiver vazio */}
                 <div className="wrapper">
                   <img src={restaurant.picture} alt={restaurant.name} />
                   <div>

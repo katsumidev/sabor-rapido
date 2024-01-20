@@ -4,6 +4,12 @@ export const Container = styled.div`
   width: 70%;
   margin: 0 auto;
   padding-top: 80px;
+
+  .search-result-title {
+    span {
+      font-weight: 700;
+    }
+  }
 `;
 
 export const FoodWrapper = styled.div`

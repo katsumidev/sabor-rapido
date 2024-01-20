@@ -18,7 +18,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2;
+  z-index: 999999;
 `;
 
 export const Background = styled.div`
