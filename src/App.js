@@ -8,6 +8,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Hub from "./pages/Hub";
 import { consultAuth } from "./services/api";
+import RestaurantPage from "./pages/RestaurantPage";
+import SearchResult from "./pages/Hub/SearchResult";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -33,8 +35,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={isAuthenticated ? <Hub /> : <Main />} />
+        <Route path="/search" element={<SearchResult />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/restaurant/:id" element={<RestaurantPage />} />
       </Routes>
       <Footer />
       <GlobalStyles />

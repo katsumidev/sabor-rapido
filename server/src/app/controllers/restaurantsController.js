@@ -5,7 +5,8 @@ const multerConfig = require("../../config/multer");
 const authMiddleware = require("../middlewares/auth");
 
 const router = express.Router();
-router.use(authMiddleware);
+
+// router.use(authMiddleware);
 
 router.get("/consult", async (req, res) => {
   try {
@@ -38,5 +39,36 @@ router.get("/consult_similar_products", async (req, res) => {
     });
   }
 });
+
+router.get("/search", async (req, res) => {
+  try {
+    const searchTerm = req.query.term;
+
+    const results = await Restaurants.find({
+      $or: [
+        { name: { $regex: searchTerm, $options: "i" } }, 
+        { description: { $regex: searchTerm, $options: "i" } },
+        { "menu.name": { $regex: searchTerm, $options: "i" } },
+        { "menu.description": { $regex: searchTerm, $options: "i" } },
+      ],
+    });
+
+    results.forEach((restaurant) => {
+      restaurant.menu = restaurant.menu.filter((dish) => {
+        return (
+          dish.name.match(new RegExp(searchTerm, "i")) ||
+          dish.description.match(new RegExp(searchTerm, "i")) 
+        );
+      });
+    });
+
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
 
 module.exports = (app) => app.use("/restaurants", router);

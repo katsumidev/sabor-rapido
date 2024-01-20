@@ -1,17 +1,20 @@
 import React from "react";
 import { Container, Info, Title, Icon } from "./styles";
 import {FaStar, FaClock, FaTruck} from "../../styles/Icons"
+import { useNavigate } from "react-router";
 
 function RestaurantCard(props) {
+  const navigate = useNavigate();
+
   return (
-    <Container>
+    <Container onClick={() => navigate(`/restaurant/${props.id}`)}>
       <img src={props.image} />
       <Title>
         <h1>{props.name}</h1>
       </Title>
       <Info>
         <li>
-          <Icon><FaStar /></Icon> {props.rating}
+          <Icon><FaStar color="#FFBC0B" /></Icon> {props.rating}
         </li>
         <li>
           <Icon><FaTruck /></Icon> R$ {props.deliveryPrice}

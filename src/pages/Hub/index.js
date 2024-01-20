@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
 import {
   Container,
-  Title,
   SearchWrapper,
   SearchInput,
   CategorieBtn,
   CategoriesWrapper,
-  RestWrapper
+  RestWrapper,
+  Banner,
+  SearchDropdown,
+  SearchedFoodWrapper,
+  SearchedRestaurantWrapper,
+  SearchedFood,
 } from "./styles";
-import { consultRestaurants } from "../../services/api";
+import { consultRestaurants, searchForParameter } from "../../services/api";
 import { FaSearch, LuSearch } from "../../styles/Icons";
 import RestaurantCard from "../../components/RestaurantCard";
+import { useNavigate } from "react-router";
+import Title from "../../components/Title";
 
 function Hub() {
   const [allRestaurants, setAllRestaurants] = useState([]);
   const [selectedOne, setSelectedOne] = useState("all");
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [searchParameter, setSearchParameter] = useState("");
+  const [filteredSearch, setFilteredSearch] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getRestaurants = async () => {
@@ -63,22 +72,37 @@ function Hub() {
     if (selectedOne === "all") {
       setFilteredRestaurants(allRestaurants);
     } else {
-      const filtered = allRestaurants.filter(restaurant =>
-        restaurant.tags.includes(selectedOne)
+      const filtered = allRestaurants.filter((restaurant) =>
+        restaurant.restaurantTags.includes(selectedOne)
       );
+
       setFilteredRestaurants(filtered);
     }
   }, [selectedOne, allRestaurants]);
 
+  const handleKeyDown = (event) => {
+    console.log(event)
+
+    if (event.key === 'Enter') {
+      navigate(`/search?term=${searchParameter}`)
+    }
+  }
+
   return (
     <Container>
       <SearchWrapper>
-        <LuSearch size={25} />
-        <SearchInput placeholder="Procure por pratos e restaurantes.." />
+        <LuSearch onClick={() => navigate(`/search?term=${searchParameter}`)} size={25} />
+        <SearchInput
+          onChange={(e) => setSearchParameter(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Procure por pratos e restaurantes.."
+        />
       </SearchWrapper>
 
+      <Banner />
+
       <Title>Categorias</Title>
-      <CategoriesWrapper>
+      <CategoriesWrapper style={{ marginBottom: "50px", marginTop: "20px" }}>
         {(categories || []).map((categorie, index) => (
           <CategorieBtn
             isSelected={selectedOne == categorie.tag}
@@ -90,19 +114,42 @@ function Hub() {
         ))}
       </CategoriesWrapper>
 
-      <Title>Restaurantes mais populares</Title>
+      {selectedOne == "all" && <Title>Populares</Title>}
+
       <RestWrapper>
         {(filteredRestaurants || []).map((restaurant, index) => (
           <RestaurantCard
+            id={restaurant._id}
             name={restaurant.name}
             deliveryPrice={restaurant.deliveryPrice}
             deliveryTime="30-40"
             rating={restaurant.rating}
-            image={restaurant.picture}
+            image={restaurant.banner}
             key={index}
           />
         ))}
       </RestWrapper>
+
+      {selectedOne === "all" && (
+        <>
+          <Title>Pizzarias</Title>
+          <RestWrapper>
+            {filteredRestaurants
+              .filter((restaurant) => restaurant.category.includes("Pizzaria"))
+              .map((restaurant) => (
+                <RestaurantCard
+                  id={restaurant._id}
+                  name={restaurant.name}
+                  deliveryPrice={restaurant.deliveryPrice}
+                  deliveryTime="30-40"
+                  rating={restaurant.rating}
+                  image={restaurant.banner}
+                  key={restaurant._id}
+                />
+              ))}
+          </RestWrapper>
+        </>
+      )}
     </Container>
   );
 }

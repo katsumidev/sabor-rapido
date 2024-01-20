@@ -1,9 +1,8 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
 export const Container = styled.div`
   height: 90px;
-  background-color: #f7f7f7;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  background-color: transparent;
   top: 0;
 
   display: flex;
@@ -14,6 +13,15 @@ export const Container = styled.div`
   z-index: 999;
   position: fixed;
   width: 100%;
+  transition: all .2s;
+
+  ${(props) =>
+    props.isFixed &&
+    css`
+      height: 80px;
+      box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+      background-color: #fff;
+    `}
 
   img {
     width: 130px;
@@ -83,7 +91,8 @@ export const DeliveryRow = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  background-color: #fff;
+  transition: all .2s;
+  background-color: ${props => props.isFixed ? "#EBEAED" : "#fff"};
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 10px 30px;
   border-radius: 30px;
@@ -104,6 +113,5 @@ export const DeliveryRow = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
   }
-`
+`;

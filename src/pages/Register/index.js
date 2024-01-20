@@ -19,6 +19,7 @@ import { AiFillCamera } from "../../styles/Icons";
 import simple_logo from "../../assets/simple_logo.png";
 import axios from "axios";
 import { consultCEP } from "../../services/api";
+import { useNavigate } from "react-router";
 
 function UploadedImage(props) {
   return (
@@ -26,13 +27,17 @@ function UploadedImage(props) {
       <Preview src={props.preview} />
       <ImageInfo>
         <p>{props.name}</p>
-        <sub>{`${props.type} - ${(props.size / (1024 * 1024)).toFixed(2)} mb`}</sub>
+        <sub>{`${props.type} - ${(props.size / (1024 * 1024)).toFixed(
+          2
+        )} mb`}</sub>
       </ImageInfo>
     </ImageContainer>
   );
 }
 
 function Register() {
+  const navigate = useNavigate();
+
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
@@ -302,7 +307,8 @@ function Register() {
             Criar Conta
           </RegisterBtn>
           <sub>
-            Já tem uma conta? <span>Entre</span>
+            Já tem uma conta?{" "}
+            <span onClick={() => navigate("/login")}>Entre</span>
           </sub>
         </Form>
       </RegisterWrapper>

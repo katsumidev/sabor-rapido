@@ -6,9 +6,10 @@ export const Container = styled.div`
   right: 0;
   min-width: 250px;
   border-radius: 30px;
-  width: 300px;
   padding: 24px;
+  width: fit-content;
   display: flex;
+  width: 350px;
   flex-direction: column;
   gap: 20px;
   opacity: 0;
@@ -16,7 +17,7 @@ export const Container = styled.div`
   transition: all 0.5s;
   transform: translateX(20px);
   box-shadow: 0 13px 48px 0 rgba(0, 0, 0, 0.15);
-  background-color: var(--main-background);
+  background-color: #fff;
   color: #252525;
   border: 1px solid rgba(255, 255, 255, 0.18);
 
@@ -37,6 +38,12 @@ export const ItemLi = styled.li`
   display: flex;
   align-items: center;
   gap: 15px;
+  transition: all .2s;
+  padding: 5px 0;
+
+  &:hover {
+    color: var(--accent-color);
+  }
 
   &.animate-in {
     animation-name: slide-in;

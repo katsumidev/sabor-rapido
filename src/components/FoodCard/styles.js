@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 400px;
+  width: 300px;
   height: fit-content;
   padding: 20px;
   border-radius: 12px;
@@ -22,6 +22,15 @@ export const Container = styled.div`
     font-size: 14pt;
   }
 
+  sub {
+    margin-top: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &:hover {
     transform: scale(1.01);
   }
@@ -29,19 +38,24 @@ export const Container = styled.div`
 
 export const Title = styled.div`
   margin-top: 10px;
+  display: flex;
   position: relative;
-  margin-bottom: 15px;
+  justify-content: space-between;
 
-  /* &::before {
-    content: "";
-    display: block;
-    width: 60%;
+  &::before {
+    content: ""; 
+    display: block; 
+    width: 30%; 
     height: 3px;
     border-radius: 30px;
     background-color: var(--accent-color);
     position: absolute;
-    bottom: -10px;
-  } */
+    bottom: -3px;
+  }
+
+  .price {
+    font-size: 17pt;
+  }
 `;
 
 export const Info = styled.ul`
@@ -49,6 +63,7 @@ export const Info = styled.ul`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 0 20px;
   margin-top: 15px;
   align-items: center;
 
@@ -71,9 +86,4 @@ export const Icon = styled.div`
   padding: 5px;
   justify-content: center;
   align-items: center;
-
-  svg {
-
-    color: #a8a8a8;
-  }
 `;

@@ -9,6 +9,9 @@ import {
   FaUser,
   FaSignOutAlt,
   MdLocationOn,
+  MdChatBubble,
+  IoTicket,
+  RiCoupon2Fill
 } from "../../styles/Icons";
 
 function Header() {
@@ -17,9 +20,25 @@ function Header() {
   const [userData, setUserData] = useState({});
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isFixed, setFixed] = useState(false);
+
+  if (typeof window !== "undefined") {
+    function setHeaderFixed() {
+      if (window.scrollY >= 1) {
+        setFixed(true);
+      } else {
+        setFixed(false);
+      }
+    }
+
+    window.addEventListener("scroll", setHeaderFixed);
+  }
 
   const options = [
     { name: "Ver Conta", icon: <FaUser />, action: "redirect", url: "account" },
+    { name: "Chats", icon: <MdChatBubble />, action: "redirect", url: "account" },
+    { name: "Pedidos", icon: <IoTicket />, action: "redirect", url: "account" },
+    { name: "Cupoms", icon: <RiCoupon2Fill />, action: "redirect", url: "account" },
     {
       name: "Meu Carrinho",
       icon: <FaShoppingBag />,
@@ -27,6 +46,7 @@ function Header() {
       url: "cart",
     },
     { name: "Sair", icon: <FaSignOutAlt />, action: "logout" },
+    
   ];
 
   useEffect(() => {
@@ -59,12 +79,12 @@ function Header() {
   }, []);
 
   return (
-    <Container>
+    <Container isFixed={isFixed}>
       <img src={logo} onClick={() => navigate("/")} />
       <HeaderMenu>
         {logged ? (
           <>
-            <DeliveryRow>
+            <DeliveryRow isFixed={isFixed}>
               <sub>Entregar para</sub>
               <span>
                 <MdLocationOn size={15} />
@@ -82,7 +102,7 @@ function Header() {
               onClick={() => setDropdownOpen(!isDropdownOpen)}
               picture={`${process.env.REACT_APP_SERVER_URL}/files/${userData.picture}`}
             >
-              <Dropdown show={isDropdownOpen} items={options} />
+              <Dropdown name={userData.name} show={isDropdownOpen} items={options} />
             </ProfilePicture>
           </>
         ) : (

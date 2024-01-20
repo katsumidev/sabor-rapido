@@ -1,27 +1,56 @@
-const Restaurants = require("./app/models/restaurants"); 
+const Restaurants = require("./app/models/restaurants");
 
-// Criar uma instância de Restaurants com dados fictícios
 const novoRestaurante = new Restaurants({
-  name: "Pizzaria do seu João",
-  picture: "https://www.lacentral.com.br/wp-content/uploads/2023/07/feche-a-pizza-italiana-sobre-o-queijo-cole-o-foco-seletivo-generativo-ai-scaled.jpg",
-  description: "Pizzaria do seu joão, uma delicia na palma da sua mão!",
-  address: "Rua jaber alexandre cecim, 57",
-  category: "Pizzaria",
-  tags: ["Pizza", "Fast Food"],
-  rating: 3.5,
-  deliveryPrice: 2.0,
-  deliveryTime: "20-50",
-  minPrice: 40.0,
+  name: "Churrasco Grego do Balacobaco",
+  picture:
+    "https://static.vecteezy.com/system/resources/previews/010/411/845/non_2x/restaurant-logo-design-template-free-vector.jpg",
+  banner:
+    "https://static.itdg.com.br/images/auto-auto/d137908679db9d310c65dc6423513bcc/churrasco-barato.jpg",
+  description:
+    "Churrasco de Alta Qualidade, o melhor churrasco grego de Uberaba! (É o unico que tem) 🔥",
+  address: "Praça Carlos Gomes, 146 - Estados Unidos, Uberaba - MG, 38015-480",
+  category: "Lanches e Churrasco",
+  restaurantTags: ["meat", "brazilfood"],
+  menuTags: [
+    "Combo",
+    "Pf",
+    "Churrasco Grego",
+    "Hambúrgueres",
+    "Batata",
+    "Bebidas",
+  ],
+  phone: "34996484068",
+  rating: 5,
+  deliveryPrice: 12.5,
+  deliveryTime: "20-80",
+  minPrice: 70.0,
   menu: [
-    { name: "Prato 1", picture: "https://s2-techtudo.glbimg.com/oCuqUTStRM4CDOVFgEPEWzO2fAE=/0x0:512x309/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/R/8/GnGPa5Q4W0ZcfNmM0a7w/unnamed.jpg", price: 10.0, description: "Descrição do Prato 1" },
-    { name: "Prato 2", picture: "https://media-cdn.tripadvisor.com/media/photo-p/17/c2/df/0d/amazing-meal.jpg", price: 15.0, description: "Descrição do Prato 2" }
+    {
+      name: "G R E G O 01",
+      tag: "Hambúrgueres",
+      picture:
+        "https://santaportal.com.br/wp/wp-content/uploads/2023/10/WhatsApp-Image-2023-10-05-at-15.35.54-1.jpeg",
+      price: 39.9,
+      description:
+        "Pão de Hambúrguer Artesanal recheado com catupiry, Hamburguer de 80g, ketchup e muito mais",
+    },
+    {
+      name: "G R E G O 02",
+      tag: "Hambúrgueres",
+      picture:
+        "https://www.clickguarulhos.com.br/wp-content/uploads/2020/08/20200806-1_greguss.jpeg",
+      price: 58.9,
+      description:
+        "Pão Frances recheado com muito amor e carinho, mais o elemento X = Meninas Superpoderosas",
+    },
   ],
 });
 
-novoRestaurante.save()
-  .then(result => {
+novoRestaurante
+  .save()
+  .then((result) => {
     console.log("Restaurante inserido com sucesso:", result);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error("Erro ao inserir restaurante:", error);
   });

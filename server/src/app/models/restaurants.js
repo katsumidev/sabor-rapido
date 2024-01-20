@@ -17,6 +17,9 @@ const MenuItemSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  tag: {
+    type: String,
+  }
 });
 
 // schema para cada restaurante, contendo suas informações e seu cardapio
@@ -29,7 +32,14 @@ const RestaurantsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  banner: {
+    type: String,
+    required: true,
+  },
   description: {
+    type: String,
+  },
+  phone: {
     type: String,
   },
   address: {
@@ -39,7 +49,10 @@ const RestaurantsSchema = new mongoose.Schema({
   category: {
     type: String,
   },
-  tags: {
+  restaurantTags: {
+    type: Array,
+  },
+  menuTags: {
     type: Array,
   },
   rating: {
