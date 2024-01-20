@@ -20,6 +20,8 @@ import simple_logo from "../../assets/simple_logo.png";
 import axios from "axios";
 import { consultCEP } from "../../services/api";
 import { useNavigate } from "react-router";
+import ModalPopUp from "../../components/ModalPopUp";
+import ErrorNotification from "../../components/ErrorNotification";
 
 function UploadedImage(props) {
   return (
@@ -36,12 +38,18 @@ function UploadedImage(props) {
 }
 
 function Register() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState({
+    isOpen: false,
+    message: "",
+  });
   const navigate = useNavigate();
 
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
     password: "",
+    confirm_password: "",
     cep: 0,
     street: "",
     neighborhood: "",
@@ -52,16 +60,14 @@ function Register() {
 
   async function createUserAccount() {
     try {
-      if (
-        !registerData.name ||
-        !registerData.email ||
-        !pictureInfo.file ||
-        !registerData.password ||
-        !registerData.street ||
-        !registerData.neighborhood ||
-        !registerData.number
-      ) {
-        throw new Error("Há um campo faltando");
+      if (verifyEmpty()) {
+        setErrorMessage({ isOpen: true, message: "Há um campo faltando." });
+        return;
+      }
+
+      if (registerData.password !== registerData.confirm_password) {
+        setErrorMessage({ isOpen: true, message: "As senhas não conferem." });
+        return;
       }
 
       const formData = new FormData();
@@ -88,9 +94,8 @@ function Register() {
       );
 
       if (response.status === 200 && response.data.token) {
-        alert("Conta criada com sucesso!");
         localStorage.setItem("access_token", response.data.token);
-        window.location.href = "/";
+        setModalOpen(true);
       }
     } catch (error) {
       alert(error.message);
@@ -146,6 +151,22 @@ function Register() {
     });
   }
 
+  function verifyEmpty() {
+    const inputs = document.querySelectorAll(".is_not_empty");
+
+    for (const input of inputs) {
+      if (input.value.trim() === "") {
+        return true; // Retorna true se pelo menos um campo estiver vazio
+      }
+    }
+
+    if (!pictureInfo.file) {
+      return true; // Retorna true se pictureInfo.file estiver vazio
+    }
+
+    return false; // Retorna false apenas se todos os campos estiverem preenchidos e pictureInfo.file não estiver vazio
+  }
+
   return (
     <Container>
       <SideBanner />
@@ -154,10 +175,28 @@ function Register() {
         <h1>Crie uma conta</h1>
         <p>E comece a pedir em mais de 50.000 restaurantes!</p>
 
+        {errorMessage.isOpen && (
+          <ErrorNotification
+            showNotification={errorMessage.isOpen}
+            setShowNotification={() =>
+              setErrorMessage({ isOpen: false, message: "" })
+            }
+            message={errorMessage.message}
+          />
+        )}
+
+        {modalOpen && (
+          <ModalPopUp
+            closeModal={() => (window.location.href = "/")}
+            message="Conta criado com sucesso!"
+          />
+        )}
+
         <Form>
           <Input>
             <FormInput
               placeholder="Nome"
+              className="is_not_empty"
               onChange={(e) =>
                 setRegisterData((prevState) => ({
                   ...prevState,
@@ -171,6 +210,7 @@ function Register() {
           <Input>
             <FormInput
               placeholder="Email"
+              className="is_not_empty"
               onChange={(e) =>
                 setRegisterData((prevState) => ({
                   ...prevState,
@@ -184,6 +224,7 @@ function Register() {
           <Input>
             <FormInput
               placeholder="Senha"
+              className="is_not_empty"
               type="password"
               onChange={(e) =>
                 setRegisterData((prevState) => ({
@@ -196,7 +237,18 @@ function Register() {
           </Input>
 
           <Input>
-            <FormInput placeholder="Senha" type="password" />
+            <FormInput
+              placeholder="Senha Novamente"
+              className="is_not_empty"
+              type="password"
+              required
+              onChange={(e) =>
+                setRegisterData((prevState) => ({
+                  ...prevState,
+                  confirm_password: e.target.value,
+                }))
+              }
+            />
             <label className="form-label">Senha Novamente</label>
           </Input>
 
@@ -219,6 +271,7 @@ function Register() {
             <Input>
               <FormInput
                 placeholder="Rua"
+                className="is_not_empty"
                 type="text"
                 disabled={registerData.cep ? true : false}
                 value={registerData.street}
@@ -234,6 +287,7 @@ function Register() {
             <Input>
               <FormInput
                 placeholder="Seu Bairro"
+                className="is_not_empty"
                 type="text"
                 value={registerData.neighborhood}
                 disabled={registerData.cep ? true : false}
@@ -252,7 +306,7 @@ function Register() {
             <Input>
               <FormInput
                 placeholder="Número"
-                className="number"
+                className="number is_not_empty"
                 type="text"
                 value={registerData.number}
                 onChange={(e) =>

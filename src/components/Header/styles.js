@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   height: 90px;
@@ -13,7 +13,7 @@ export const Container = styled.div`
   z-index: 999;
   position: fixed;
   width: 100%;
-  transition: all .2s;
+  transition: all 0.2s;
 
   ${(props) =>
     props.isFixed &&
@@ -34,8 +34,10 @@ export const HeaderMenu = styled.ul`
   display: flex;
   gap: 30px;
   align-items: center;
+  justify-content: flex-end;
   font-weight: 700;
   font-size: 11.5pt;
+  width: 100%;
 
   svg {
     cursor: pointer;
@@ -86,13 +88,49 @@ export const ProfilePicture = styled.div`
   }
 `;
 
+export const SearchWrapper = styled.div`
+  width: 90%;
+  max-width: 700px;
+  background-color: ${(props) => (props.isFixed ? "#EBEAED" : "#fff")};
+  border-radius: 30px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px;
+  position: relative;
+
+  svg {
+    color: var(--accent-color);
+  }
+`;
+
+export const SearchInput = styled.input`
+  width: 90%;
+  padding: 12px 10px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 11pt;
+  font-weight: 700;
+  justify-self: flex-start;
+
+  &::placeholder {
+    font-size: 11pt;
+    font-weight: 700;
+  }
+`;
+
 export const DeliveryRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  transition: all .2s;
-  background-color: ${props => props.isFixed ? "#EBEAED" : "#fff"};
+  transition: all 0.3s;
+  background-color: ${(props) => (props.isFixed ? "#EBEAED" : "#fff")};
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 10px 30px;
   border-radius: 30px;

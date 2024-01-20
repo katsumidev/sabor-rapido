@@ -15,3 +15,4 @@ export { LuSearch } from "react-icons/lu";
 export { MdOutlineError, MdLocationOn, MdChatBubble } from "react-icons/md";
 export { IoTicket } from "react-icons/io5";
 export { RiCoupon2Fill } from "react-icons/ri";
+export { BsCheckCircleFill } from "react-icons/bs";

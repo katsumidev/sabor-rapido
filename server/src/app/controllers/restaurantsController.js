@@ -1,7 +1,6 @@
 const express = require("express");
 const Restaurants = require("../models/restaurants");
-const multer = require("multer");
-const multerConfig = require("../../config/multer");
+const { normalize } = require("diacritics");
 const authMiddleware = require("../middlewares/auth");
 
 const router = express.Router();

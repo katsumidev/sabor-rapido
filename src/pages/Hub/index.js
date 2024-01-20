@@ -80,25 +80,8 @@ function Hub() {
     }
   }, [selectedOne, allRestaurants]);
 
-  const handleKeyDown = (event) => {
-    console.log(event)
-
-    if (event.key === 'Enter') {
-      navigate(`/search?term=${searchParameter}`)
-    }
-  }
-
   return (
     <Container>
-      <SearchWrapper>
-        <LuSearch onClick={() => navigate(`/search?term=${searchParameter}`)} size={25} />
-        <SearchInput
-          onChange={(e) => setSearchParameter(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Procure por pratos e restaurantes.."
-        />
-      </SearchWrapper>
-
       <Banner />
 
       <Title>Categorias</Title>

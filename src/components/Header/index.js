@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Container, DeliveryRow, HeaderMenu, ProfilePicture } from "./styles";
+import { Container, DeliveryRow, HeaderMenu, ProfilePicture, SearchInput, SearchWrapper } from "./styles";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router";
 import { consultAuth, consultCEP } from "../../services/api";
@@ -11,7 +11,8 @@ import {
   MdLocationOn,
   MdChatBubble,
   IoTicket,
-  RiCoupon2Fill
+  RiCoupon2Fill,
+  LuSearch
 } from "../../styles/Icons";
 
 function Header() {
@@ -20,6 +21,7 @@ function Header() {
   const [userData, setUserData] = useState({});
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [searchParameter, setSearchParameter] = useState("");
   const [isFixed, setFixed] = useState(false);
 
   if (typeof window !== "undefined") {
@@ -34,11 +36,28 @@ function Header() {
     window.addEventListener("scroll", setHeaderFixed);
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      navigate(`/search?term=${searchParameter}`)
+      setSearchParameter("")
+    }
+  }
+
   const options = [
     { name: "Ver Conta", icon: <FaUser />, action: "redirect", url: "account" },
-    { name: "Chats", icon: <MdChatBubble />, action: "redirect", url: "account" },
+    {
+      name: "Chats",
+      icon: <MdChatBubble />,
+      action: "redirect",
+      url: "account",
+    },
     { name: "Pedidos", icon: <IoTicket />, action: "redirect", url: "account" },
-    { name: "Cupoms", icon: <RiCoupon2Fill />, action: "redirect", url: "account" },
+    {
+      name: "Cupoms",
+      icon: <RiCoupon2Fill />,
+      action: "redirect",
+      url: "account",
+    },
     {
       name: "Meu Carrinho",
       icon: <FaShoppingBag />,
@@ -46,7 +65,6 @@ function Header() {
       url: "cart",
     },
     { name: "Sair", icon: <FaSignOutAlt />, action: "logout" },
-    
   ];
 
   useEffect(() => {
@@ -84,6 +102,18 @@ function Header() {
       <HeaderMenu>
         {logged ? (
           <>
+            <SearchWrapper isFixed={isFixed}>
+              <LuSearch
+                onClick={() => navigate(`/search?term=${searchParameter}`)}
+                size={25}
+              />
+              <SearchInput
+                onChange={(e) => setSearchParameter(e.target.value)}
+                value={searchParameter}
+                onKeyDown={handleKeyDown}
+                placeholder="Procure por pratos e restaurantes.."
+              />
+            </SearchWrapper>
             <DeliveryRow isFixed={isFixed}>
               <sub>Entregar para</sub>
               <span>
@@ -102,7 +132,11 @@ function Header() {
               onClick={() => setDropdownOpen(!isDropdownOpen)}
               picture={`${process.env.REACT_APP_SERVER_URL}/files/${userData.picture}`}
             >
-              <Dropdown name={userData.name} show={isDropdownOpen} items={options} />
+              <Dropdown
+                name={userData.name}
+                show={isDropdownOpen}
+                items={options}
+              />
             </ProfilePicture>
           </>
         ) : (
