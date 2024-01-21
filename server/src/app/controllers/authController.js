@@ -2,14 +2,13 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/users");
 const authConfig = require("../../config/auth.json");
-const mongo = require("mongoose");
 const bcrypt = require("bcryptjs");
 const multer = require("multer");
 const multerConfig = require("../../config/multer");
-const authMiddleware = require("../middlewares/auth");
 
 const router = express.Router();
 
+// função responsavel por gerar o token do json web token que sera usado para validação do usuário
 function generateToken(params = {}) {
   return jwt.sign(params, authConfig.secret, {
     expiresIn: 90000,
@@ -84,24 +83,5 @@ router.post("/authenticate", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-router.use(authMiddleware);
-
-router.get('/consult', async (req, res) => {
-  try {
-    const user = await User.findById(req.userId);
-
-    if (!user) {
-      return res.status(404).send('User not found');
-    }
-
-    res.json(user);
-  } catch (error) {
-    console.error(error); // Log do erro para depuração
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-
 
 module.exports = (app) => app.use("/auth", router);

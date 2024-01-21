@@ -35,7 +35,7 @@ const UsersSchema = new mongoose.Schema({
     required: true,
   },
   uf: {
-    type: String, 
+    type: String,
   },
   complement: {
     type: String,

@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/users");
 const authConfig = require("../../config/auth.json");
 
+// middleware usado para validar o token de acesso do usuario, afim de manter sua sessão ativa e também por segurança
 module.exports = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 

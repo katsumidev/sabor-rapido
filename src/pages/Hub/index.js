@@ -18,7 +18,9 @@ function Hub() {
   const [allRestaurants, setAllRestaurants] = useState([]);
   const [selectedOne, setSelectedOne] = useState("all");
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  // busca todos os restaurantes
   useEffect(() => {
     const getRestaurants = async () => {
       const response = await consultRestaurants();
@@ -61,6 +63,7 @@ function Hub() {
     },
   ];
 
+  // filtra os restaurantes pela categoria
   useEffect(() => {
     if (selectedOne === "all") {
       setFilteredRestaurants(allRestaurants);
@@ -72,8 +75,6 @@ function Hub() {
       setFilteredRestaurants(filtered);
     }
   }, [selectedOne, allRestaurants]);
-
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {

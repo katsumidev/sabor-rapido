@@ -1,10 +1,9 @@
 import React from "react";
 import { Container, ItemLi } from "./styles";
-import { FaUser, FaShoppingBag, FaSignOutAlt } from "react-icons/fa"; // Certifique-se de importar os ícones corretamente
 import { useNavigate } from "react-router";
 
 function Dropdown({ show, items, name }) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleAction = (item) => {
     switch (item.action) {
@@ -28,7 +27,10 @@ function Dropdown({ show, items, name }) {
   };
 
   return (
-    <Container className={`dropdown ${show ? "show" : ""}`} onAnimationEnd={onAnimationEnd}>
+    <Container
+      className={`dropdown ${show ? "show" : ""}`}
+      onAnimationEnd={onAnimationEnd}
+    >
       <h2>Olá {name} 👋</h2>
       {items.map((item, index) => {
         return (

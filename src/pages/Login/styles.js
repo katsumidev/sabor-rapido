@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import banner from "../../assets/banner.jpg"
+import banner from "../../assets/banner.jpg";
 
 export const Container = styled.div`
   height: auto;
@@ -49,7 +49,7 @@ export const SideBanner = styled.div`
 `;
 
 export const LoginWrapper = styled.div`
- display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;

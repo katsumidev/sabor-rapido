@@ -7,7 +7,6 @@ export const Container = styled.div`
   gap: 10px;
   color: #202120;
   margin-bottom: 15px;
-    
 
   .line {
     width: 100px;

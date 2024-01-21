@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Background,
   Container,
@@ -7,7 +7,7 @@ import {
   LoadingBar,
   ProgressBar,
 } from "./styles";
-import {BsCheckCircleFill } from "../../styles/Icons"
+import { BsCheckCircleFill } from "../../styles/Icons";
 
 function ModalPopUp(props) {
   const [loading, setLoading] = useState(true);

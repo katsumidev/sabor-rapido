@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import mosk from "../fonts/Mosk.ttf";
 
+// arquivo de estilos global
 export default createGlobalStyle`
     * {
         margin: 0;

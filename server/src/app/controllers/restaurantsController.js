@@ -5,8 +5,10 @@ const authMiddleware = require("../middlewares/auth");
 
 const router = express.Router();
 
-// router.use(authMiddleware);
+// todas as rotas abaixos irão passar pela validação do token
+router.use(authMiddleware);
 
+// busca todos os produtos pesquisados ou por um produto especifico atraves do _id
 router.get("/consult", async (req, res) => {
   try {
     if (req.query.id != null) {
@@ -25,20 +27,7 @@ router.get("/consult", async (req, res) => {
   }
 });
 
-router.get("/consult_similar_products", async (req, res) => {
-  if (req.query.category != null) {
-    let category = req.query.category;
-    let id = req.query.id;
-
-    await Restaurants.find({ category }, function (err, arr) {
-      if (err) {
-        res.send(err);
-      }
-      res.json(arr.filter((item) => item._id != id));
-    });
-  }
-});
-
+// rota para buscar restaurantes e comidas especificas buscando pelo termo pesquisado na collection do mongo
 router.get("/search", async (req, res) => {
   try {
     const searchTerm = req.query.term;

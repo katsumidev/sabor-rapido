@@ -26,7 +26,7 @@ export const Wrapper = styled.div`
 `;
 
 export const RestaurantInfo = styled.div`
-  width: 35%;
+  width: 40%;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
@@ -40,9 +40,9 @@ export const RestaurantInfo = styled.div`
 
   .deliveryInfo {
     color: var(--semi-dark);
-    vertical-align: middle;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 5px;
 
     svg {

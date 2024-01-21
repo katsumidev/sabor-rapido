@@ -1,3 +1,6 @@
+// arquivo responsavel por exportar todos os icones que eu vou usar no projeto
+// assim não preciso importar de novo ou de varios lugares diferentes causando uma confusão
+
 export { AiOutlineLogin, AiFillCamera } from "react-icons/ai";
 export { TbTruckDelivery } from "react-icons/tb";
 export {

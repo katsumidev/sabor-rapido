@@ -43,7 +43,6 @@ export const Container = styled.div`
       max-width: 100%;
     }
 
-
     img {
       width: 200px;
       height: 200px;
@@ -85,18 +84,14 @@ export const Title = styled.div`
   justify-content: space-between;
 
   &::before {
-    content: ""; 
-    display: block; 
-    width: 30%; 
+    content: "";
+    display: block;
+    width: 30%;
     height: 3px;
     border-radius: 30px;
     background-color: var(--accent-color);
     position: absolute;
     bottom: -3px;
-  }
-
-  .price {
-    font-size: 17pt;
   }
 `;
 

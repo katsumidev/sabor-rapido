@@ -15,6 +15,7 @@ function SearchResult() {
   const [selectedOne, setSelectedOne] = useState("restaurants");
   const navigate = useNavigate();
 
+  // busca pelo termo da url no banco de dados
   useEffect(() => {
     const getFilteredResults = async () => {
       const response = await searchForParameter(term);
@@ -38,7 +39,9 @@ function SearchResult() {
 
   return (
     <Container>
-      <sub className="search-result-title">Resultados da busca por: <span>{term}</span></sub>
+      <sub className="search-result-title">
+        Resultados da busca por: <span>{term}</span>
+      </sub>
       <Title>O que você procura?</Title>
       <CategoriesWrapper style={{ marginBottom: "50px", marginTop: "20px" }}>
         {(types || []).map((type, index) => (
@@ -67,7 +70,6 @@ function SearchResult() {
               restaurant.menu &&
               restaurant.menu.length > 0 ? (
               <ItemWrapper>
-                {/* Renderizar informações do restaurante apenas se o menu não estiver vazio */}
                 <div className="wrapper">
                   <img src={restaurant.picture} alt={restaurant.name} />
                   <div>

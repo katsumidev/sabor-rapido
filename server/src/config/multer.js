@@ -2,6 +2,7 @@ const multer = require("multer");
 const path = require("path");
 const crypto = require("crypto");
 
+// modulo responsavel por formatar e importar imagens para /tpm/uploads (foto de perfil)
 module.exports = {
   dest: path.resolve(__dirname, "..", "..", "tmp", "uploads"),
   storage: multer.diskStorage({
@@ -13,7 +14,9 @@ module.exports = {
         if (err) {
           cb(err);
         }
-        const fileName = `${hash.toString("hex")}-${file.originalname.replaceAll(/\s/g,'').replaceAll(/[^0-9a-zA-Z.]/g, '')}`;
+        const fileName = `${hash.toString("hex")}-${file.originalname
+          .replaceAll(/\s/g, "")
+          .replaceAll(/[^0-9a-zA-Z.]/g, "")}`;
         cb(null, fileName);
       });
     },

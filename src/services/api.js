@@ -1,5 +1,6 @@
 import axios from "axios";
 const url = process.env.REACT_APP_SERVER_URL;
+// este arquivo armazena grande parte das funções responsaveis pelas calls na api do backend, fazendo a tarefa de processar os erros e informações
 
 // User Info Requests
 export const consultCEP = async (cepNumber) => {

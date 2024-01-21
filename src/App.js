@@ -14,6 +14,7 @@ import SearchResult from "./pages/Hub/SearchResult";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // faz a verificação de login do usuario, se o usuario estiver autenticado, vai renderizar o hub como pagina principal, se nao, renderiza a landing page (main)
   useEffect(() => {
     const checkAuthentication = async () => {
       try {

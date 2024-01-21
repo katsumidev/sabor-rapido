@@ -36,7 +36,9 @@ function Header() {
   const [searchParameter, setSearchParameter] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isFixed, setFixed] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  // efeito on Scroll do header, observe na página
   if (typeof window !== "undefined") {
     function setHeaderFixed() {
       if (window.scrollY >= 1) {
@@ -73,6 +75,7 @@ function Header() {
     { name: "Sair", icon: <FaSignOutAlt />, action: "logout" },
   ];
 
+  // usado para monitor cliques fora do dropdown, assim fechand o dropdown caso ocorra um click
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -87,6 +90,7 @@ function Header() {
     };
   }, [dropdownRef]);
 
+  // verifica se o usuario está logado
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
@@ -102,8 +106,7 @@ function Header() {
     checkAuthentication();
   }, []);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
+  // monitora o tamanho da tela
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -134,6 +137,7 @@ function Header() {
     }
   };
 
+  // pesquisa pelo termo digitado
   const handleSearch = () => {
     if (searchParameter !== "") {
       navigate(`/search?term=${searchParameter}`);

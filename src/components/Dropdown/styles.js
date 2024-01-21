@@ -38,7 +38,7 @@ export const ItemLi = styled.li`
   display: flex;
   align-items: center;
   gap: 15px;
-  transition: all .2s;
+  transition: all 0.2s;
   padding: 5px 0;
 
   &:hover {

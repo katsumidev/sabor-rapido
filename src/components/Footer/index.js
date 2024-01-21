@@ -5,7 +5,7 @@ import logo from "../../assets/simple_logo.png";
 function Footer() {
   return (
     <Container>
-       <div className="hr-90" />
+      <div className="hr-90" />
       <FooterInfo>
         <ul>
           <h3>Sabor Rápido</h3>

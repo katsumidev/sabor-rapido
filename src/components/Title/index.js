@@ -1,11 +1,11 @@
-import React from 'react';
-import { Container } from './styles';
+import React from "react";
+import { Container } from "./styles";
 
-function Title({children}) {
+function Title({ children }) {
   return (
     <Container>
-        <h3>{children}</h3>
-        <div className='line'></div>
+      <h3>{children}</h3>
+      <div className="line"></div>
     </Container>
   );
 }

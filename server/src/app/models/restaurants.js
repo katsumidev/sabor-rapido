@@ -19,7 +19,7 @@ const MenuItemSchema = new mongoose.Schema({
   },
   tag: {
     type: String,
-  }
+  },
 });
 
 // schema para cada restaurante, contendo suas informações e seu cardapio
@@ -62,15 +62,15 @@ const RestaurantsSchema = new mongoose.Schema({
     type: Number,
   },
   deliveryTime: {
-    type: String 
+    type: String,
   },
   minPrice: {
     type: Number,
     required: true,
   },
   menu: {
-    type: [MenuItemSchema], 
-    default: [], 
+    type: [MenuItemSchema],
+    default: [],
   },
 });
 

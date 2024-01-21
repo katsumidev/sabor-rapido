@@ -1,5 +1,6 @@
 const Restaurants = require("./app/models/restaurants");
 
+// use esse script para criar novos restaurantes no banco de dados
 const novoRestaurante = new Restaurants({
   name: "Churrasco Grego do Balacobaco",
   picture:

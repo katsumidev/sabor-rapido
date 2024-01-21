@@ -24,14 +24,14 @@ export const Container = styled.div`
   }
 
   .mobile-header-wrapper {
-    display: ${props => props.searchOpen ? "none" : "flex"};
+    display: ${(props) => (props.searchOpen ? "none" : "flex")};
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
   }
 
   .search-full-bar {
-    display: ${props => props.searchOpen ? "flex" : "none"};
+    display: ${(props) => (props.searchOpen ? "flex" : "none")};
     align-items: center;
     gap: 30px;
     width: 100%;

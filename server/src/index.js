@@ -5,10 +5,7 @@ const path = require("path");
 
 const app = express();
 
-app.use(
-  "/files",
-  express.static(path.join(__dirname, "..", "tmp", "uploads"))
-);
+app.use("/files", express.static(path.join(__dirname, "..", "tmp", "uploads")));
 
 app.use(cors());
 app.use(bodyParser.json());

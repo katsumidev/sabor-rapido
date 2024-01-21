@@ -68,7 +68,12 @@ function RestaurantPage() {
                   <FaTruck />
                   <span>Hoje, </span>
                   {restaurantInfo?.deliveryTime} min •{" "}
-                  <span>{(restaurantInfo?.deliveryPrice || "").toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</span>
+                  <span>
+                    {(restaurantInfo?.deliveryPrice || "").toLocaleString(
+                      "pt-br",
+                      { style: "currency", currency: "BRL" }
+                    )}
+                  </span>
                 </sub>
                 <h3>{restaurantInfo?.name}</h3>
                 <sub className="description">{restaurantInfo?.description}</sub>
@@ -104,7 +109,12 @@ function RestaurantPage() {
           <MenuWrapper>
             <Title>Cardápio</Title>
             <CategoriesWrapper>
-              <CategorieBtn isSelected={selectedOne == "all"} onClick={() => setSelectedOne("all")}>Todos</CategorieBtn>
+              <CategorieBtn
+                isSelected={selectedOne == "all"}
+                onClick={() => setSelectedOne("all")}
+              >
+                Todos
+              </CategorieBtn>
               {(restaurantInfo?.menuTags || []).map((tag, index) => (
                 <CategorieBtn
                   isSelected={selectedOne == tag}

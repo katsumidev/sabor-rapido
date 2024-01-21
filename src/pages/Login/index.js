@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, LoginWrapper, SideBanner } from "./styles";
 import { MdOutlineError } from "../../styles/Icons";
-import {
-  Form,
-  FormInput,
-  Input,
-  RegisterBtn,
-} from "../Register/styles";
+import { Form, FormInput, Input, RegisterBtn } from "../Register/styles";
 import simple_logo from "../../assets/simple_logo.png";
 import { authenticateUser } from "../../services/api";
 import { useNavigate } from "react-router";
@@ -15,7 +10,7 @@ function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [message, setMessage] = useState({ text: "", type: "" });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleAuthentication = async () => {
     const result = await authenticateUser(email, password);
@@ -77,7 +72,10 @@ function Login() {
           <RegisterBtn onClick={() => handleAuthentication()}>
             Entrar
           </RegisterBtn>
-          <sub>Não tem uma conta ainda? <span onClick={() => navigate("/register")}>Crie uma agora!</span></sub>
+          <sub>
+            Não tem uma conta ainda?{" "}
+            <span onClick={() => navigate("/register")}>Crie uma agora!</span>
+          </sub>
         </Form>
       </LoginWrapper>
     </Container>
