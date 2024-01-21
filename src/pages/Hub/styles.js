@@ -4,8 +4,23 @@ import main_banner from "../../assets/mainBanner.png";
 export const Container = styled.div`
   background-color: var(--hub-background);
   padding: 50px;
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
+
+  @media (max-width: 1280px) {
+    width: 90%;
+  }
+
+  @media (max-width: 750px) {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .mainBanner {
+    width: 100%;
+    border-radius: 18px;
+    margin: 30px 0;
+  }
 `;
 
 export const Title = styled.div`
@@ -23,23 +38,6 @@ export const Title = styled.div`
     background-color: #000;
     position: absolute;
     bottom: -10px;
-  }
-`;
-
-export const SearchWrapper = styled.div`
-  width: 100%;
-  background-color: #fff;
-  border-radius: 30px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0 20px;
-  position: relative;
-
-  svg {
-    color: var(--accent-color);
   }
 `;
 
@@ -76,7 +74,7 @@ export const SearchedRestaurantWrapper = styled.div`
       color: var(--semi-dark);
     }
   }
-`
+`;
 
 export const SearchedFood = styled.div`
   width: 100%;
@@ -108,7 +106,7 @@ export const SearchedFood = styled.div`
       color: var(--semi-dark);
     }
   }
-`
+`;
 
 export const SearchedFoodWrapper = styled.div`
   display: flex;
@@ -116,7 +114,7 @@ export const SearchedFoodWrapper = styled.div`
   padding: 10px;
   border-radius: 18px;
   cursor: pointer;
-  transition: all .2s;
+  transition: all 0.2s;
   background-color: var(--secundary-background);
   margin-bottom: 10px;
 `;
@@ -142,22 +140,6 @@ export const Banner = styled.div`
   background-repeat: no-repeat;
 `;
 
-export const SearchInput = styled.input`
-  width: 90%;
-  padding: 18px 20px;
-  border-radius: 30px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  font-size: 11pt;
-  font-weight: 700;
-
-  &::placeholder {
-    font-size: 11pt;
-    font-weight: 700;
-  }
-`;
-
 export const CategorieBtn = styled.div`
   background-color: ${(props) =>
     props.isSelected ? "var(--accent-color)" : "var(--secundary-background)"};
@@ -167,19 +149,50 @@ export const CategorieBtn = styled.div`
   font-weight: 700;
   font-size: 10.5pt;
   cursor: pointer;
+  max-width: 500px;
+  white-space: nowrap;
+  text-align: center;
+  height: fit-content;
   transition: all 0.2s;
+
+  @media (max-width: 750px) {
+    font-size: 9pt;
+    padding: 5px 15px;
+  }
 `;
 
 export const CategoriesWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 750px) {
+    gap: 10px;
+  }
 `;
 
 export const RestWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
   margin-bottom: 50px;
+  flex-wrap: wrap;
+  width: 100%;
+
+  @media (max-width: 750px) {
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    gap: 10px;
+    justify-content: flex-start;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;

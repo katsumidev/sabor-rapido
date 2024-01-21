@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from "react";
 import {
   Container,
-  SearchWrapper,
-  SearchInput,
   CategorieBtn,
   CategoriesWrapper,
   RestWrapper,
   Banner,
-  SearchDropdown,
-  SearchedFoodWrapper,
-  SearchedRestaurantWrapper,
-  SearchedFood,
 } from "./styles";
-import { consultRestaurants, searchForParameter } from "../../services/api";
-import { FaSearch, LuSearch } from "../../styles/Icons";
+import { consultRestaurants } from "../../services/api";
 import RestaurantCard from "../../components/RestaurantCard";
 import { useNavigate } from "react-router";
 import Title from "../../components/Title";
+import main_banner from "../../assets/mainBanner.png";
+import mid_banner from "../../assets/mid_banner.png";
+import mobile_banner from "../../assets/mobile_banner.png";
 
 function Hub() {
   const [allRestaurants, setAllRestaurants] = useState([]);
   const [selectedOne, setSelectedOne] = useState("all");
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-  const [searchParameter, setSearchParameter] = useState("");
-  const [filteredSearch, setFilteredSearch] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const getRestaurants = async () => {
@@ -80,9 +73,32 @@ function Hub() {
     }
   }, [selectedOne, allRestaurants]);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Container>
-      <Banner />
+      <img
+        className="mainBanner"
+        src={
+          windowWidth >= 1400
+            ? main_banner
+            : windowWidth <= 600
+            ? mobile_banner
+            : mid_banner
+        }
+      />
 
       <Title>Categorias</Title>
       <CategoriesWrapper style={{ marginBottom: "50px", marginTop: "20px" }}>

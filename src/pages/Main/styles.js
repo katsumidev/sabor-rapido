@@ -7,21 +7,28 @@ export const Container = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    padding-top: 70px;
+    height: auto;
+  }
+
+  @media (max-width: 500px) {
+    width: 90vw;
+    margin: 0 auto;
+  }
 `;
 
 export const LeftSide = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   text-align: left;
+  padding: 0 50px;
 
   img {
     width: 150px;
-  }
-
-  div {
-    width: 80%;
   }
 
   h3 {
@@ -38,6 +45,20 @@ export const LeftSide = styled.div`
   .accent {
     color: var(--accent-color);
   }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 3rem;
+    }
+  }
+
+  @media (max-width: 500px) {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    padding: 0px;
+  }
 `;
 
 export const RightSide = styled.div`
@@ -50,15 +71,21 @@ export const RightSide = styled.div`
     max-width: 100%;
     z-index: -1;
   }
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const OrderNowBtn = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 20px;
 
   padding: 20px;
+  min-width: 250px;
   max-width: 250px;
   text-align: center;
   border-radius: 100px;

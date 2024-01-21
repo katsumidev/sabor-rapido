@@ -5,16 +5,40 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 60px;
-  width: 100vw;
+  gap: 40px;
+  width: 90vw;
+  margin: 0 auto;
 
   img {
+    width: auto;
+    min-width: 200px;
     max-width: 700px;
+  }
+
+  @media (max-width: 1250px) {
+    flex-direction: column;
+    width: 90vw;
+    margin-top: 100px;
+
+    img {
+      width: 70%;
+    }
+  }
+
+  @media (max-width: 900px) {
+    img {
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 750px) {
+    text-align: center;
   }
 `;
 
 export const Info = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 25px;
 
@@ -33,6 +57,19 @@ export const Info = styled.div`
   }
 
   max-width: 600px;
+
+  @media (max-width: 1250px) {
+    max-width: 80%;
+  }
+
+  @media (max-width: 750px) {
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
 `;
 
 export const LogIn = styled.div`

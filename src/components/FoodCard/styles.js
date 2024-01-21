@@ -34,6 +34,48 @@ export const Container = styled.div`
   &:hover {
     transform: scale(1.01);
   }
+
+  @media (max-width: 1250px) {
+    max-width: 220px;
+    padding: 10px;
+
+    .infoWrapper {
+      max-width: 100%;
+    }
+
+
+    img {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  @media (max-width: 525px) {
+    max-width: 100%;
+    width: 100%;
+    flex-direction: row;
+
+    .infoWrapper {
+      width: 100%;
+      margin-left: 20px;
+    }
+
+    img {
+      width: 80px;
+      height: 80px;
+      min-width: 80px;
+    }
+  }
+
+  @media (max-width: 350px) {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px;
+
+    .infoWrapper {
+      margin: 0 auto;
+    }
+  }
 `;
 
 export const Title = styled.div`

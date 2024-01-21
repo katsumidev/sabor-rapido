@@ -10,13 +10,27 @@ export const Container = styled.div`
       font-weight: 700;
     }
   }
+
+  @media (max-width: 750px) {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
 `;
 
 export const FoodWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: ${(props) =>
     props.direction == "restaurants" ? "row" : "column"};
   gap: 20px;
+
+  @media (max-width: 750px) {
+    justify-content: center;
+    width: 100%;
+  }
 `;
 
 export const ItemWrapper = styled.div`
@@ -53,7 +67,6 @@ export const ItemWrapper = styled.div`
 `;
 
 export const FoodSearch = styled.div`
-
   .itemWrapper {
     width: fit-content;
   }

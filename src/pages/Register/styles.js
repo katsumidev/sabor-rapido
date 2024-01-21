@@ -21,12 +21,17 @@ export const Container = styled.div`
 
 export const SideBanner = styled.div`
   width: 50%;
-  min-height: 100%;
+  height: 100vh;
+  max-height: 1200px;
   background-image: url(${banner});
   background-size: cover;
   border-radius: 30px;
   max-width: 800px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const RegisterWrapper = styled.div`
@@ -35,11 +40,21 @@ export const RegisterWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 50%;
-  padding: 30px 0;
+  padding: 30px;
   background-color: #fff;
   max-width: 600px;
+  height: auto;
   border-radius: 30px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  @media (max-width: 1000px) {
+    width: 100%;
+    text-align: center;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
 
   .logo {
     width: 60px;
@@ -79,6 +94,10 @@ export const Form = styled.div`
     font-weight: 700;
     font-size: 10pt;
     margin-top: 20px;
+  }
+
+  @media (max-width: 1000px) {
+    width: 100%;
   }
 `;
 
@@ -121,28 +140,40 @@ export const DropContainer = styled.div`
 
 export const ImageContainer = styled.div`
   display: flex;
-  width: 100%;
+  flex-direction: row;
+  max-width: 100%;
   margin: 10px;
   align-items: center;
-  background-color: var(--secundary-background);
   padding: 10px 20px;
   border-radius: 30px;
   gap: 20px;
+  width: 100%;
+  background-color: var(--secundary-background);
 
-  p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  @media (max-width: 1000px) {
+    justify-content: flex-start;
   }
 `;
 
 export const ImageInfo = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  flex: 1;
+  flex-shrink: 0;
+  min-width: 0;
+  max-width: 80% !important;
 
-  p {
+  p,
+  sub {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 90%;
     margin: 0px;
+    text-align: left;
   }
 `;
 
