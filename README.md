@@ -1,6 +1,8 @@
 <p align="center"><img src="https://github.com/mooncoded/sabor-rapido-grao/blob/main/src/assets/simple_logo.png" width="100px" /></p>
 
-# Projeto Sabor Rápido 🍔
+<h1 align="center">Projeto Sabor Rápido 🍔</h1>
+
+![SaborRapido](https://github.com/mooncoded/sabor-rapido-grao/blob/main/extra/demo.gif)
 
 ## Desenvolvido conforme as instruções e requisitos do MVP Grão Direto
 
