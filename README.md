@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+<p align="center"><img src="https://github.com/mooncoded/sabor-rapido-grao/blob/main/src/assets/simple_logo.png" width="100px" /></p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Projeto Sabor Rápido 🍔
 
-## Available Scripts
+## Desenvolvido conforme as instruções e requisitos do MVP Grão Direto
 
-In the project directory, you can run:
+---
 
-### `npm start`
+### Requisitos para Executar o Projeto
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [ReactJs](https://reactjs.org/)
+- [MongoDB](https://www.mongodb.com)
+- [NodeJS](https://nodejs.org/en)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+### 🚀 Instruções
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Baixar Ferramentas Necessárias:**
+   - Certifique-se de ter as versões mais recentes do NodeJS, npm e yarn instaladas.
+   - Baixe o [pacote de ferramentas de terminal do MongoDB](https://www.mongodb.com/try/download/database-tools).
+   - Baixe e instale o [MongoDB Community](https://www.mongodb.com/try/download/community).
 
-### `npm run build`
+2. **Baixar e Instalar Dependências do Projeto:**
+   - Para o frontend:
+     ```
+     yarn install
+     ```
+   - Para o backend:
+     ```
+     cd server
+     yarn install
+     ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 🛠️ Configuração dos Dados
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Crie o Arquivo `.env`:**
+   - Crie um arquivo `.env` baseado no modelo em `.env-copy` tanto para o backend quanto para o frontend.
+   - Inclua as URLs para a API do backend e a conexão do MongoDB.
 
-### `npm run eject`
+2. **Crie o Banco de Dados:**
+   - Abra o MongoDB Compass e crie um novo banco de dados chamado `sabor-rapido`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **Importe a Base de Dados MongoDB:**
+   1. Vá para o diretório dos executáveis do MongoDB.
+   2. Mova os arquivos `.csv` da pasta "extra" para a pasta do MongoDB.
+   3. Execute os comandos abaixo para importar as coleções:
+      - Restaurantes:
+        ```
+        mongoimport /db:sabor-rapido /collection:restaurants /file:restaurantes.csv
+        ```
+      - Usuários:
+        ```
+        mongoimport /db:sabor-rapido /collection:users /file:users.csv
+        ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
+### Executando o Projeto
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   - Para o frontend:
+     ```
+     yarn start
+     ```
+   - Para o backend:
+     ```
+     cd server/src
+     node index.js
+     ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 📖 Author
+<table>
+  <tr>
+    <td  align=center>
+        <img src="https://avatars.githubusercontent.com/u/90803853?v=4" width="100px" alt="Moon">
+        <a href="https://github.com/mooncoded">
+          <br>
+            Moon
+          </br>
+        </a>
+    </td>
+  </tr>
+</table>
