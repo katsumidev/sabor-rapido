@@ -18,9 +18,14 @@ function SearchResult() {
   // busca pelo termo da url no banco de dados
   useEffect(() => {
     const getFilteredResults = async () => {
-      const response = await searchForParameter(term);
+      try {
+        const response = await searchForParameter(term);
 
-      setResults(response);
+        setResults(response);
+      } catch (err) {
+        console.log(err)
+      }
+     
     };
 
     getFilteredResults();

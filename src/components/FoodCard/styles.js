@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 300px;
+  width: 220px;
   height: fit-content;
   padding: 20px;
   border-radius: 12px;
@@ -13,13 +13,17 @@ export const Container = styled.div`
   transition: all 0.2s;
 
   img {
-    width: 100%;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     border-radius: 12px;
   }
 
   h1 {
-    font-size: 14pt;
+    font-size: 12pt;
+  }
+
+  .food-title {
+    margin-top: 8px;
   }
 
   sub {
@@ -91,7 +95,7 @@ export const Title = styled.div`
     border-radius: 30px;
     background-color: var(--accent-color);
     position: absolute;
-    bottom: -3px;
+    bottom: -8px;
   }
 `;
 

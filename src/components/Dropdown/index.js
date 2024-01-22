@@ -11,8 +11,10 @@ function Dropdown({ show, items, name }) {
         navigate(item.url);
         break;
       case "logout":
+        console.log("zika hein")
         localStorage.removeItem("access_token");
         localStorage.clear();
+        navigate("/")
         window.location.reload();
         break;
       default:

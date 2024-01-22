@@ -26,8 +26,12 @@ export const Container = styled.div`
   .mobile-header-wrapper {
     display: ${(props) => (props.searchOpen ? "none" : "flex")};
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 100%;
+
+    @media (min-width: 750px) {
+      display: none;
+    }
   }
 
   .search-full-bar {
@@ -98,6 +102,10 @@ export const HeaderMenu = styled.ul`
   font-size: 11.5pt;
   width: 100%;
 
+  .dropdown-wrapper {
+    position: relative;
+  }
+
   .register-btn {
     color: var(--accent-color);
   }
@@ -139,12 +147,13 @@ export const HeaderMenu = styled.ul`
   }
 `;
 
-export const ProfilePicture = styled.div`
+export const ProfilePicture = styled.img`
   min-width: 50px;
   min-height: 50px;
-  background-image: url(${(props) => props.picture});
-  background-position: center;
-  background-size: cover;
+  width: 50px;
+  height: 50px;
+  max-width: 50px;
+  max-height: 50px;
   border-radius: 100%;
   cursor: pointer;
   position: relative;
@@ -157,7 +166,7 @@ export const ProfilePicture = styled.div`
 
 export const SearchWrapper = styled.div`
   max-width: 700px;
-  width: 70%;
+  width: 100%;
   background-color: ${(props) => (props.isFixed ? "#EBEAED" : "#fff")};
   border-radius: 30px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

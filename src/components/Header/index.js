@@ -13,6 +13,7 @@ import { useNavigate } from "react-router";
 import { consultAuth, consultCEP } from "../../services/api";
 import mobile_logo from "../../assets/simple_logo.png";
 import Dropdown from "../Dropdown";
+import placeholder from "../../assets/user_placeholder.jpg";
 import { Rotate as Hamburger } from "hamburger-react";
 import {
   FaShoppingBag,
@@ -25,11 +26,11 @@ import {
   LuSearch,
   IoMdClose,
 } from "../../styles/Icons";
+import { useAuth } from "../../utils/AuthProvider";
 
 function Header() {
   const navigate = useNavigate();
-  const [logged, setLogged] = useState(false);
-  const [userData, setUserData] = useState({});
+  const {userData} = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -90,22 +91,6 @@ function Header() {
     };
   }, [dropdownRef]);
 
-  // verifica se o usuario está logado
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      try {
-        const response = await consultAuth();
-
-        setLogged(!logged);
-        setUserData(response);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    checkAuthentication();
-  }, []);
-
   // monitora o tamanho da tela
   useEffect(() => {
     const handleResize = () => {
@@ -128,8 +113,8 @@ function Header() {
       case "logout":
         localStorage.removeItem("access_token");
         localStorage.clear();
+        window.location.href = "/"
         window.location.reload();
-        navigate("/");
         break;
       default:
         setIsOpen(false);
@@ -156,14 +141,13 @@ function Header() {
   return (
     <>
       <Container searchOpen={searchOpen} isFixed={isFixed}>
+        <img
+          src={windowWidth >= 900 ? logo : mobile_logo}
+          onClick={() => navigate("/")}
+        />
         <div className="mobile-header-wrapper">
-          <img
-            src={windowWidth >= 900 ? logo : mobile_logo}
-            onClick={() => navigate("/")}
-          />
-
           <div className="mobile-right-side">
-            {logged && (
+            {userData && (
               <LuSearch
                 className="mobile-search-icon"
                 size={25}
@@ -191,7 +175,7 @@ function Header() {
         </div>
 
         <HeaderMenu>
-          {logged ? (
+          {userData ? (
             <>
               <SearchWrapper isFixed={isFixed}>
                 <LuSearch onClick={() => handleSearch()} size={25} />
@@ -217,17 +201,25 @@ function Header() {
                 <FaShoppingBag size={15} />
               </li>
 
-              <ProfilePicture
-                ref={dropdownRef}
-                onClick={() => setDropdownOpen(!isDropdownOpen)}
-                picture={`${process.env.REACT_APP_SERVER_URL}/files/${userData.picture}`}
-              >
+              <div className="dropdown-wrapper" ref={dropdownRef}>
+                <ProfilePicture
+                  onClick={() => setDropdownOpen(!isDropdownOpen)}
+                  src={
+                    userData.picture !== null
+                      ? `${process.env.REACT_APP_SERVER_URL}/files/${userData.picture}`
+                      : placeholder
+                  }
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = placeholder;
+                  }}
+                ></ProfilePicture>
                 <Dropdown
                   name={userData.name}
                   show={isDropdownOpen}
                   items={options}
                 />
-              </ProfilePicture>
+              </div>
             </>
           ) : (
             <>
@@ -248,7 +240,7 @@ function Header() {
       </Container>
       {isOpen && (
         <MobileMenu>
-          {logged ? (
+          {userData ? (
             <>
               <h1>Olá {userData?.name} 👋</h1>
               <ul>

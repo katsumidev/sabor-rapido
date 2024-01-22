@@ -22,6 +22,7 @@ import { consultCEP } from "../../services/api";
 import { useNavigate } from "react-router";
 import ModalPopUp from "../../components/ModalPopUp";
 import ErrorNotification from "../../components/ErrorNotification";
+import { useAuth } from "../../utils/AuthProvider";
 
 function UploadedImage(props) {
   return (
@@ -38,6 +39,7 @@ function UploadedImage(props) {
 }
 
 function Register() {
+  const { createUserAccount } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState({
     isOpen: false,
@@ -47,50 +49,6 @@ function Register() {
 
   const [registerData, setRegisterData] = useState({});
   const [pictureInfo, setPictureInfo] = useState({});
-
-  async function createUserAccount() {
-    try {
-      if (verifyEmpty()) {
-        setErrorMessage({ isOpen: true, message: "Há um campo faltando." });
-        return;
-      }
-
-      if (registerData.password !== registerData.confirm_password) {
-        setErrorMessage({ isOpen: true, message: "As senhas não conferem." });
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("file", pictureInfo.file);
-      formData.append("name", registerData.name);
-      formData.append("email", registerData.email);
-      formData.append("password", registerData.password);
-      formData.append("cep", registerData.cep.replace(/\D/g, ""));
-      formData.append("street", registerData.street);
-      formData.append("neighborhood", registerData.neighborhood);
-      formData.append("complement", registerData.complement);
-      formData.append("uf", registerData.uf);
-      formData.append("number", registerData.number);
-
-      const response = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/auth/register`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Accept: "application/json",
-          },
-        }
-      );
-
-      if (response.status === 200 && response.data.token) {
-        localStorage.setItem("access_token", response.data.token);
-        setModalOpen(true);
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  }
 
   function renderDragMessage(isDragActive, isDragReject) {
     if (!isDragActive) {
@@ -107,6 +65,29 @@ function Register() {
 
     return <UploadMessage type="success">Solte-o!!</UploadMessage>;
   }
+
+  const handleSubmit = async () => {
+    if (verifyEmpty()) {
+      setErrorMessage({ isOpen: true, message: "Há um campo faltando." });
+      return;
+    }
+
+    if (registerData.password !== registerData.confirm_password) {
+      setErrorMessage({ isOpen: true, message: "As senhas não conferem." });
+      return;
+    }
+
+    const result = await createUserAccount(registerData, pictureInfo.file);
+    if (result) {
+      setModalOpen(true);
+    } else {
+      setErrorMessage({
+        isOpen: true,
+        message:
+          "Ocorreu um erro durante o registro, tente novamente mais tarde.",
+      });
+    }
+  };
 
   useEffect(() => {
     const formattedCep = (registerData.cep || "").replace(/\D/g, ""); // Remove caracteres não numéricos
@@ -365,9 +346,7 @@ function Register() {
             ></UploadedImage>
           )}
 
-          <RegisterBtn onClick={() => createUserAccount()}>
-            Criar Conta
-          </RegisterBtn>
+          <RegisterBtn onClick={() => handleSubmit()}>Criar Conta</RegisterBtn>
           <sub>
             Já tem uma conta?{" "}
             <span onClick={() => navigate("/login")}>Entre</span>

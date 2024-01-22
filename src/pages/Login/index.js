@@ -3,38 +3,23 @@ import { Container, LoginWrapper, SideBanner } from "./styles";
 import { MdOutlineError } from "../../styles/Icons";
 import { Form, FormInput, Input, RegisterBtn } from "../Register/styles";
 import simple_logo from "../../assets/simple_logo.png";
-import { authenticateUser } from "../../services/api";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../utils/AuthProvider";
 
 function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [message, setMessage] = useState({ text: "", type: "" });
+  const { handleAuthentication } = useAuth();
   const navigate = useNavigate();
 
-  const handleAuthentication = async () => {
-    const result = await authenticateUser(email, password);
+  const handleSubmit = async () => {
+    const result = await handleAuthentication(email, password);
 
-    switch (result.error) {
-      case true:
-        setMessage({
-          text: result.message,
-          type: "error",
-        });
-        break;
-      case false:
-        userLogin(result.token);
-        break;
-      default:
-        console.error("Unexpected error in authentication result.");
+    if (result?.error) {
+      setMessage({ text: result?.message, type: "error" });
     }
   };
-
-  function userLogin(token) {
-    localStorage.setItem("access_token", token);
-
-    window.location.href = "/";
-  }
 
   return (
     <Container>
@@ -69,9 +54,7 @@ function Login() {
             <label className="form-label">Sua Senha</label>
           </Input>
 
-          <RegisterBtn onClick={() => handleAuthentication()}>
-            Entrar
-          </RegisterBtn>
+          <RegisterBtn onClick={() => handleSubmit()}>Entrar</RegisterBtn>
           <sub>
             Não tem uma conta ainda?{" "}
             <span onClick={() => navigate("/register")}>Crie uma agora!</span>

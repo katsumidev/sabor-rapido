@@ -6,7 +6,7 @@ const authMiddleware = require("../middlewares/auth");
 const router = express.Router();
 
 // todas as rotas abaixos irão passar pela validação do token
-// router.use(authMiddleware);
+router.use(authMiddleware);
 
 // busca todos os produtos pesquisados ou por um produto especifico atraves do _id
 router.get("/consult", async (req, res) => {

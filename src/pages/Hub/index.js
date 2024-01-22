@@ -94,7 +94,7 @@ function Hub() {
         className="mainBanner"
         src={
           windowWidth >= 1400
-            ? main_banner
+            ? mid_banner
             : windowWidth <= 600
             ? mobile_banner
             : mid_banner
@@ -114,7 +114,7 @@ function Hub() {
         ))}
       </CategoriesWrapper>
 
-      {selectedOne == "all" && <Title>Populares</Title>}
+      {selectedOne == "all" && <Title>Lojas</Title>}
 
       <RestWrapper>
         {(filteredRestaurants || []).map((restaurant, index) => (
@@ -122,34 +122,13 @@ function Hub() {
             id={restaurant._id}
             name={restaurant.name}
             deliveryPrice={restaurant.deliveryPrice}
-            deliveryTime="30-40"
+            deliveryTime={restaurant.deliveryTime}
             rating={restaurant.rating}
             image={restaurant.banner}
             key={index}
           />
         ))}
       </RestWrapper>
-
-      {selectedOne === "all" && (
-        <>
-          <Title>Pizzarias</Title>
-          <RestWrapper>
-            {filteredRestaurants
-              .filter((restaurant) => restaurant.category.includes("Pizzaria"))
-              .map((restaurant) => (
-                <RestaurantCard
-                  id={restaurant._id}
-                  name={restaurant.name}
-                  deliveryPrice={restaurant.deliveryPrice}
-                  deliveryTime="30-40"
-                  rating={restaurant.rating}
-                  image={restaurant.banner}
-                  key={restaurant._id}
-                />
-              ))}
-          </RestWrapper>
-        </>
-      )}
     </Container>
   );
 }

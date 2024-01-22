@@ -13,14 +13,21 @@ export const Container = styled.div`
   transition: all 0.2s;
   min-width: 300px;
 
-  img {
+  .rest-banner {
     width: 100%;
     height: 200px;
+    background-image: url(${(props) => props.src });
+    background-size: cover;
+    background-position: center;
     border-radius: 12px;
   }
 
   h1 {
     font-size: 14pt;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 90%;
+    text-overflow: ellipsis;
   }
 
   &:hover {
@@ -34,6 +41,12 @@ export const Container = styled.div`
     justify-content: flex-start;
     text-align: left;
 
+    h1 {
+      white-space: wrap;
+      overflow: auto;
+      width: 100%;
+    }
+
     .infoWrapper {
       display: flex;
       flex-direction: column;
@@ -41,7 +54,7 @@ export const Container = styled.div`
       margin-left: 30px;
     }
 
-    img {
+    .rest-banner {
       height: 200px;
       width: 200px;
     }
@@ -63,9 +76,50 @@ export const Container = styled.div`
       font-size: 11pt;
     }
 
-    img {
+    .rest-banner {
       height: 150px;
       width: 150px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+
+    h1 {
+      white-space: wrap;
+      overflow: auto;
+      width: 100%;
+    }
+
+    .infoWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 10px;
+    }
+
+    .rest-banner {
+      height: 80px;
+      width: 80px;
+      min-width: 80px;
+    }
+  }
+
+  @media (max-width: 350px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px 10px;
+
+    .infoWrapper {
+      align-items: center;
+      margin: 0px;
     }
   }
 `;
@@ -113,6 +167,10 @@ export const Info = styled.ul`
   @media (max-width: 750px) {
     margin-top: 0px;
     font-size: 10pt;
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: row;
   }
 `;
 

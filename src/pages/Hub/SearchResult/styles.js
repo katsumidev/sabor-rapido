@@ -30,6 +30,14 @@ export const FoodWrapper = styled.div`
     justify-content: center;
     width: 100%;
   }
+
+  @media (max-width: 500px) {
+    justify-content: flex-start;
+  }
+
+  @media (max-width: 350px) {
+    justify-content: center;
+  }
 `;
 
 export const ItemWrapper = styled.div`

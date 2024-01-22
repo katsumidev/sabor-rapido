@@ -4,8 +4,9 @@ import main_banner from "../../assets/mainBanner.png";
 export const Container = styled.div`
   background-color: var(--hub-background);
   padding: 50px;
-  width: 80%;
+  width: 75%;
   margin: 0 auto;
+  max-width: 1500px;
 
   @media (max-width: 1280px) {
     width: 90%;
@@ -183,10 +184,8 @@ export const RestWrapper = styled.div`
 
   @media (max-width: 750px) {
     align-items: flex-start;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
+    flex-wrap: wrap;
     gap: 10px;
-    justify-content: flex-start;
 
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -194,5 +193,12 @@ export const RestWrapper = styled.div`
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 20px;
   }
 `;

@@ -9,9 +9,13 @@ export const Container = styled.div`
     width: 90vw;
   }
 
+  @media (max-width: 900px) {
+    width: 100vw;
+    padding: 20px;
+  }
+
   @media (max-width: 750px) {
     padding: 20px 22px;
-    width: 100vw;
   }
 `;
 
@@ -20,13 +24,14 @@ export const Wrapper = styled.div`
   gap: 40px;
   align-items: flex-start;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1100px) {
     flex-direction: column;
   }
 `;
 
 export const RestaurantInfo = styled.div`
-  width: 40%;
+  width: 35%;
+  min-width: 500px;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
@@ -73,11 +78,12 @@ export const RestaurantInfo = styled.div`
     margin-bottom: 30px;
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1100px) {
     width: 100%;
+    min-width: auto;
 
     .profilePicture {
-      height: 300px;
+      height: auto;
     }
   }
 
@@ -146,7 +152,7 @@ export const Menu = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
 
 
   @media (max-width: 525px) {
