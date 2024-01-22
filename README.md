@@ -34,6 +34,12 @@
      yarn install
      ```
 
+   - Inicie o backend para gerar o banco de dados
+     ```
+     cd server/src
+     node index.js
+     ```
+
 ---
 
 ### 🛠️ Configuração dos Dados
@@ -42,10 +48,7 @@
    - Crie um arquivo `.env` baseado no modelo em `.env-copy` tanto para o backend quanto para o frontend.
    - Inclua as URLs para a API do backend e a conexão do MongoDB.
 
-2. **Crie o Banco de Dados:**
-   - Abra o MongoDB Compass e crie um novo banco de dados chamado `sabor-rapido`.
-
-3. **Importe a Base de Dados MongoDB:**
+2. **Importe a Base de Dados MongoDB:**
    1. Vá para o diretório dos executáveis do MongoDB.
    2. Mova os arquivos `.csv` da pasta "extra" para a pasta do MongoDB.
    3. Execute os comandos abaixo para importar as coleções:
