@@ -3,4 +3,5 @@ node_modules
 .env
 
 tmp/uploads/*
+!tmp/uploads/c2cf2683b887d68f9c4ecd0d860af295-download4.png
 !tmp/uploads/.gitkeep
