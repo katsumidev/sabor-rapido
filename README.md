@@ -4,8 +4,6 @@
 
 ![SaborRapido](https://github.com/mooncoded/sabor-rapido-grao/blob/main/extra/demo.gif)
 
-## Desenvolvido conforme as instruções e requisitos do MVP Grão Direto
-
 ---
 
 ### Requisitos para Executar o Projeto
