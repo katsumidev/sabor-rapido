@@ -1,12 +1,12 @@
 <p align="center"><img src="https://github.com/mooncoded/sabor-rapido-grao/blob/main/src/assets/simple_logo.png" width="100px" /></p>
 
-<h1 align="center">Projeto Sabor Rápido 🍔</h1>
+<h1 align="center">Sabor Rápido Project 🍔</h1>
 
 ![SaborRapido](https://github.com/mooncoded/sabor-rapido-grao/blob/main/extra/demo.gif)
 
 ---
 
-### Requisitos para Executar o Projeto
+### Requirements to Run the Project
 
 - [ReactJs](https://reactjs.org/)
 - [MongoDB](https://www.mongodb.com)
@@ -14,25 +14,25 @@
 
 ---
 
-### 🚀 Instruções
+### 🚀 Instructions
 
-1. **Baixar Ferramentas Necessárias:**
-   - Certifique-se de ter as versões mais recentes do NodeJS, npm e yarn instaladas.
-   - Baixe o [pacote de ferramentas de terminal do MongoDB](https://www.mongodb.com/try/download/database-tools).
-   - Baixe e instale o [MongoDB Community](https://www.mongodb.com/try/download/community).
+1. **Download Necessary Tools:**
+   - Make sure you have the latest versions of NodeJS, npm, and yarn installed.
+   - Download the [MongoDB terminal tools package](https://www.mongodb.com/try/download/database-tools).
+   - Download and install [MongoDB Community](https://www.mongodb.com/try/download/community).
 
-2. **Baixar e Instalar Dependências do Projeto:**
-   - Para o frontend:
+2. **Download and Install Project Dependencies:**
+   - For the frontend:
      ```
      yarn install
      ```
-   - Para o backend:
+   - For the backend:
      ```
      cd server
      yarn install
      ```
 
-   - Inicie o backend para gerar o banco de dados
+   - Start the backend to generate the database
      ```
      cd server/src
      node index.js
@@ -40,33 +40,33 @@
 
 ---
 
-### 🛠️ Configuração dos Dados
+### 🛠️ Data Configuration
 
-1. **Crie o Arquivo `.env`:**
-   - Crie um arquivo `.env` baseado no modelo em `.env-copy` tanto para o backend quanto para o frontend.
-   - Inclua as URLs para a API do backend e a conexão do MongoDB.
+1. **Create the `.env` File:**
+   - Create a `.env` file based on the template in `.env-copy` for both the backend and frontend.
+   - Include the URLs for the backend API and MongoDB connection.
 
-2. **Importe a Base de Dados MongoDB:**
-   1. Vá para o diretório dos executáveis do MongoDB.
-   2. Mova os arquivos `.csv` da pasta "extra" para a pasta do MongoDB.
-   3. Execute os comandos abaixo para importar as coleções:
-      - Restaurantes:
+2. **Import MongoDB Database:**
+   1. Go to the MongoDB executables directory.
+   2. Move the `.csv` files from the "extra" folder to the MongoDB folder.
+   3. Run the following commands to import the collections:
+      - Restaurants:
         ```
         mongoimport /db:sabor-rapido /collection:restaurants /file:restaurantes.csv
         ```
-      - Usuários:
+      - Users:
         ```
         mongoimport /db:sabor-rapido /collection:users /file:users.csv
         ```
 
 ---
-### Executando o Projeto
+### Running the Project
 
-   - Para o frontend:
+   - For the frontend:
      ```
      yarn start
      ```
-   - Para o backend:
+   - For the backend:
      ```
      cd server/src
      node index.js
